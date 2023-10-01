@@ -161,7 +161,7 @@
         var type = formData.get('type');
         var description = formData.get('description');
         var id = Date.now();
-        var user = location.hash|prompt("enter your name");
+        var user = location.hash||"#"+prompt("enter your name");
         var transaction = {
             date,
             amount,
@@ -206,7 +206,7 @@
 
 
         var data = {
-            user:user ,
+            user:location.hash||"#"+prompt("enter your name") ,
             month: document.querySelector("#selectMonth").value.split("-")[1],
             year: document.querySelector("#selectMonth").value.split("-")[0]
         }
