@@ -257,7 +257,7 @@
                         if (item.type == "credit") {
                             total = total + Number(item.amount);
                             income = income + Number(item.amount);
-                        } else if (item.type == "savings") {
+                        } else if (item.type == "Savings") {
                             savings = savings + Number(item.amount);
                             total = total - Number(item.amount);
                         } else {
@@ -293,7 +293,6 @@
                     var cell2 = document.createElement("td");
                     cell2.innerHTML = expence;
                     expenceRow.appendChild(cell2);
-
                     // Append the row to the table
                     summury.appendChild(expenceRow);
 
