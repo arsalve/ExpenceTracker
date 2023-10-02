@@ -2,9 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const path = require('path');
-
 const bodyParser = require("body-parser");
-
 const port = process.env.PORT||8080;
 const catchHandler = require('./CustomPackages/catchHandler.js');
 const DataManupulation = require('./CustomPackages/DataManupulation.js');
