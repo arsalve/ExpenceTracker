@@ -1,4 +1,4 @@
-const uri = process.env.MONGODB;
+const uri = process.env.MONGODB||"mongodb+srv://Alpha1996:Alpha1996@notepad.marpq.mongodb.net/Users?retryWrites=true&w=majority";
 const mongoose = require('mongoose');
 const Model = require('./Models.js');
 mongoose.connect(uri, {
