@@ -1,4 +1,4 @@
-const uri = process.env.MONGODB || "mongodb+srv://Alpha1996:Alpha1996@notepad.marpq.mongodb.net/Users?retryWrites=true&w=majority";
+const uri = process.env.MONGODB;
 const mongoose = require('mongoose');
 const Model = require('./Models.js');
 const catchHandler = require('./catchHandler.js');
@@ -14,10 +14,10 @@ async function FindObj(req, cb) {
     var query = {
         user: req.body.user,
         transaction: {$all:[{
-            $elemMatch: {
+            $elemMatch: { $lt:{
                 month:req.body.month,
                 year: req.body.year
-            }
+            }}
         }]}
     };
     try {
