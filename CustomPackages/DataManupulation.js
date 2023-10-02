@@ -1,4 +1,4 @@
-const uri = process.env.MONGODB || "mongodb+srv://Alpha1996:Alpha1996@notepad.marpq.mongodb.net/Users?retryWrites=true&w=majority";
+const uri = process.env.MONGODB;
 const mongoose = require('mongoose');
 const Model = require('./Models.js');
 const catchHandler = require('./catchHandler.js');
@@ -42,11 +42,31 @@ async function FindObj(req, cb) {
     }
 }
 
+async function objectAvilable (req, cb) {
+    var re = 0
+    var query = {
+        user: req.body.user
+    };
+    try {
+        var result = await Model.user.find(query).exec();
+        // console.log(result);
+        if (result.length > 0)
+            return  cb(result);
+        else
+            return cb("object not Found");
+    } catch (err) {
+        catchHandler("While Finding data in the DB", err, "ErrorC");
+        return cb("Error")
+    }
+
+
+}
+
 //Following function which is triggered when req. occured on /Update enpoint, Updates an object in Mongo db or if the object is not present it will create new  
 async function Insert(req, resp) {
 
     try {
-        FindObj(req, (a) => {
+        objectAvilable(req, (a) => {
             if (a != "object not Found") {
                 var obj = new Model.user(req.body);
                 Model.user.updateOne({
