@@ -1,10 +1,9 @@
 // Define dropdown values
 var dropdownValues = {
-    "Savings": ["Mutual Funds", "FD", "RD", "Gold", "LIC/Insurance policies", "PPF"],
-    "Income": ["Salary", "Return on Investmen", "Income-Other"],
-    "Expence": ["Food", "HouseHold expence", "Transportation", "Entertainment", "Communication",
-        "Personal care", "Clothing", "Vehicle Maintenance", "Fule"
-    ]
+
+    "Savings": ["म्युच्युअल फंड्स", "एफडी", "आरडी", "सोने", "एलआयसीविमा पॉलिसी", "पीपीएफ"],
+    "Income": ["पगार", "गुंतवणूक वर रिटर्न", "उत्पन्न - अन्य"],
+    "Expence": ["अन्न", "घरातील खर्च", "परिवहन", "मनोरंजन", "संचार", "वैयक्तिक काळजी", "कपडे", "वाहन देखरेख", "इंधन", "रोकड", "वॉलेट ट्रान्स्फर"]
 };
 // Get references to the form and table elements
 var form = document.querySelector('form');
@@ -57,10 +56,12 @@ function displayData() {
     var table = document.getElementById("entries");
     var summury = document.getElementById("summury");
     var today = new Date()
+    if (document.querySelector("#selectMonth").value == '')
+        document.querySelector("#selectMonth").value = today.getFullYear() + "-" + today.toLocaleString('default', {
+            month: '2-digit'
+        });;
 
-    document.querySelector("#selectMonth").value = today.getFullYear() + "-" + today.toLocaleString('default', {
-        month: '2-digit'
-    });;
+
     var data = {
         user: location.hash || "#" + prompt("enter your name"),
         month: document.querySelector("#selectMonth").value.split("-")[1] || today.getMonth(),
@@ -82,10 +83,10 @@ function displayData() {
             var income = 0;
             res.json().then((data) => {
                 // Loop through the data
-                var TX = data[0].transaction;
-                TX.forEach((item) => {
+                var TX = data;
+                TX.forEach((Entry) => {
                     // Get the month from the date
-
+                    var item = Entry.transaction;
                     // Create a new table row
                     var row = document.createElement("tr");
                     var cell1 = document.createElement("td");
@@ -101,7 +102,24 @@ function displayData() {
                     row.appendChild(cell2);
 
                     var cell3 = document.createElement("td");
-                    cell3.innerHTML = item.type;
+                    switch (item.type) {
+                        case "credit":
+                            cell3.innerHTML = "उत्पन्न";
+                            cell3.style.backgroundColor = "#12b1127d";
+                            break;
+                        case "debit":
+                            cell3.innerHTML = "खर्च";
+                            cell3.style.backgroundColor = "#b119127d";
+                            break;
+                        case "Savings":
+                            cell3.innerHTML = "बचत";
+                            cell3.style.backgroundColor = "#fff0377d";
+                            break;
+
+                        default:
+                            cell3.innerHTML = "";
+                            break;
+                    }
                     row.appendChild(cell3);
 
                     var cell4 = document.createElement("td");
@@ -129,6 +147,7 @@ function displayData() {
                 // Create and append cells for each column
                 var cell1 = document.createElement("td");
                 cell1.innerHTML = "एकूण  उत्पन्न";
+                cell1.style.backgroundColor = "#12b1127d";
                 IncomeRow.appendChild(cell1);
 
                 var cell2 = document.createElement("td");
@@ -144,6 +163,7 @@ function displayData() {
                 // Create and append cells for each column
                 var cell1 = document.createElement("td");
                 cell1.innerHTML = "एकूण खर्च";
+                cell1.style.backgroundColor = "#b119127d";
                 expenceRow.appendChild(cell1);
 
                 var cell2 = document.createElement("td");
@@ -156,6 +176,7 @@ function displayData() {
                 // Create and append cells for each column
                 var cell1 = document.createElement("td");
                 cell1.innerHTML = "एकूण बचत";
+                cell1.style.backgroundColor = "#fff0377d";
                 Savingsrow.appendChild(cell1);
 
                 var cell2 = document.createElement("td");
@@ -201,7 +222,7 @@ form.addEventListener('submit', (event) => {
     var description = formData.get('description');
     var id = Date.now();
     var user = location.hash || "#" + prompt("enter your name");
-    
+
     // Create transaction object
     var transaction = {
         date,
@@ -212,25 +233,25 @@ form.addEventListener('submit', (event) => {
         year,
         month,
     };
-    
+
     // Create request object
     var req = {
         user: user,
         "transaction": [transaction]
     }
-    
+
     // Convert request object to JSON string
     var json = JSON.stringify(req);
-    
+
     // Make an AJAX request to your server
     var xhr = new XMLHttpRequest();
     xhr.open('POST', url + '/Insert', true);
     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     xhr.send(json);
-    
+
     // Hide save button and reset form fields
     document.getElementById("saveData").hidden = true;
-    
+
     // Handle AJAX response
     xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
@@ -243,6 +264,3 @@ form.addEventListener('submit', (event) => {
 });
 // Initialize the second dropdown with the default options
 updateSecondDropdown();
-
-
-

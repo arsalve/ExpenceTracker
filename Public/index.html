@@ -22,44 +22,69 @@
                 background-color: #272822;
                 color: #f8f8f2;
             }
-
+            
             .form-control {
                 background-color: #49483e;
                 border-color: #75715e;
                 color: #f8f8f2;
                 width: 100%;
                 height: 20%;
-
             }
+            
             .form-control2 {
                 background-color: #272822;
                 border-color: #75715e;
                 color: #f8f8f2;
-             
-
             }
+            
             .btn-primary {
                 background-color: #66d9ef;
                 border-color: #66d9ef;
                 color: #272822;
             }
-
+            
             /* Add some style for the table */
             table {
                 border-collapse: collapse;
                 width: 80%;
                 margin: 20px auto;
             }
-
+            
             th,
             td {
                 border: 1px solid #75715e;
                 padding: 10px;
             }
-
+            
             th {
                 background-color: #49483e;
             }
+            
+            /* Media queries */
+            @media only screen and (max-width: 768px) {
+                .form-control {
+                    height: 30%;
+                    font-size: 14px;
+                    padding-top: 5px;
+                    padding-bottom: 5px;
+                    margin-bottom: 10px;
+                }
+                
+                table {
+                    width: 100%;
+                    margin-left: auto;
+                    margin-right: auto;
+                    font-size: 14px;
+                }
+                
+                th,
+                td {
+                    padding-top: 5px;
+                    padding-bottom: 5px;
+                    font-size: 14px;
+                }
+            }
+            
         </style>
     </head>
 
@@ -79,7 +104,7 @@
                     <td><input type="date" class="form-control selectWidth" name="date" id="date" required></td>
                     <td><input id="ammount" class="form-control selectWidth" type="number" name="amount" required></td>
                     <td><select name="type" class="form-control selectWidth" id="ExpenseType">
-                            <option value="credit">मिळकत</option>
+                            <option value="credit">उत्पन्न</option>
                             <option value="debit">खर्च</option>
                             <option value="Savings">बचत </option>
                         </select></td>

@@ -1,4 +1,4 @@
-const uri = process.env.MONGODB;
+const uri = process.env.MONGODB || "mongodb+srv://Alpha1996:Alpha1996@notepad.marpq.mongodb.net/Users?retryWrites=true&w=majority";
 const mongoose = require('mongoose');
 const Model = require('./Models.js');
 const catchHandler = require('./catchHandler.js');
@@ -12,16 +12,25 @@ mongoose.connect(uri, {
 async function FindObj(req, cb) {
     var re = 0;
     var query = {
-        user: req.body.user,
-        transaction: {$all:[{
-            $elemMatch: { $lt:{
-                month:req.body.month,
-                year: req.body.year
-            }}
-        }]}
+        $match: {
+            user: req.body.user
+        }
+    };
+    var unwind = {
+        $unwind: "$transaction"
+    }
+    var match = {
+        $match: {
+            "transaction.month": String(req.body.month),
+            "transaction.year": String(req.body.year)
+        }
     };
     try {
-        var result = await Model.user.find(query).exec();
+        // var result = await Model.user.find(query).sort({
+        //     date: 'desc'
+        // }).limit(req.body.limit).exec()
+        
+        var result = await Model.user.aggregate([query, unwind, match])
         // console.log(result);
         if (result.length > 0)
             return cb(result);
@@ -31,9 +40,8 @@ async function FindObj(req, cb) {
         catchHandler("While Finding data in the DB", err, "ErrorC");
         return cb("Error")
     }
-
-
 }
+
 //Following function which is triggered when req. occured on /Update enpoint, Updates an object in Mongo db or if the object is not present it will create new  
 async function Insert(req, resp) {
 
