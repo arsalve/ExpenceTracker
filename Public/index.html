@@ -262,7 +262,7 @@
         var table = document.getElementById("entries");
         var summury = document.getElementById("summury");
         var today= new Date()
-
+        if(document.querySelector("#selectMonth").value=='')
         document.querySelector("#selectMonth").value=today.getFullYear()+"-"+today.toLocaleString('default', { month: '2-digit' });;
         var data = {
             user: location.hash || "#" + prompt("enter your name"),
