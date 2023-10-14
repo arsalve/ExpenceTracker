@@ -11,55 +11,72 @@
             } else {
                 url = "https://kharchapani.onrender.com";
             }
-
         </script>
 
         <!-- Bootstrap CDN -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src='https://cdn.plot.ly/plotly-2.26.0.min.js'></script>
         <!-- Monokai dark theme -->
         <style>
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 2%;
+            }
+
             body {
                 background-color: #272822;
                 color: #f8f8f2;
             }
-            
+
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                padding: 2%;
+            }
+
             .form-control {
                 background-color: #49483e;
                 border-color: #75715e;
                 color: #f8f8f2;
                 width: 100%;
-                height: 20%;
+                height: 28%;
             }
-            
+
             .form-control2 {
                 background-color: #272822;
                 border-color: #75715e;
                 color: #f8f8f2;
             }
-            
+
             .btn-primary {
                 background-color: #66d9ef;
                 border-color: #66d9ef;
                 color: #272822;
             }
-            
+
             /* Add some style for the table */
             table {
                 border-collapse: collapse;
                 width: 80%;
                 margin: 20px auto;
             }
-            
+
             th,
             td {
                 border: 1px solid #75715e;
                 padding: 10px;
             }
-            
+
             th {
                 background-color: #49483e;
             }
-            
+
             /* Media queries */
             @media only screen and (max-width: 768px) {
                 .form-control {
@@ -69,14 +86,14 @@
                     padding-bottom: 5px;
                     margin-bottom: 10px;
                 }
-                
+
                 table {
                     width: 100%;
                     margin-left: auto;
                     margin-right: auto;
                     font-size: 14px;
                 }
-                
+
                 th,
                 td {
                     padding-top: 5px;
@@ -84,7 +101,6 @@
                     font-size: 14px;
                 }
             }
-            
         </style>
     </head>
 
@@ -94,10 +110,10 @@
         <form class="form-group" class="form-group" action="" method="post">
             <table>
                 <tr>
-                    <th class ="form-control2" >दिनांक</th>
-                    <th class ="form-control2">रक्कम</th>
-                    <th class ="form-control2">प्रकार </th>
-                    <th class ="form-control2">तपशील</th>
+                    <th class="form-control2">दिनांक</th>
+                    <th class="form-control2">रक्कम</th>
+                    <th class="form-control2">प्रकार </th>
+                    <th class="form-control2">तपशील</th>
                 </tr>
 
                 <tr class="input-field-container">
@@ -163,7 +179,17 @@
             </tr>
 
         </table>
+        <h3>खात्या चा वर्गवार तपशील </h3>
+        <table id="cate">
+            <!-- Add a table header row with four columns -->
+            <tr>
+                <th>प्रकार</th>
+                <th>रक्कम</th>
+            </tr>
+
+        </table>
         <h3>व्यवहार तपशील</h3>
+
         <table id="entries">
             <!-- Add a table header row with four columns -->
             <tr>
@@ -175,7 +201,35 @@
             </tr>
 
         </table>
-    </div>
+
+        <table id="sunburst1">
+            <!-- Add a table header row with four columns -->
+            <tr>
+                <th colspan=3>
+                    <div id='sunburst'>
+                </th>
+            </tr>
+            <tr>
+
+
+                <th>
+                    <div id='Exp'>
+                </th>
+                <th>
+                    <div id='Save'>
+                </th>
+                <th>
+                    <div id='Income'>
+                </th>
+
+            </tr>
+
+        </table>
+
+
+    </div><!-- Plotly chart will be drawn inside this DIV -->
+
 </body>
 <script type="text/javascript" src="./master.js"></script>
+
 </html>

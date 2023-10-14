@@ -1,4 +1,5 @@
-const uri = process.env.MONGODB;
+const uri = process.env.MONGODB
+;
 const mongoose = require('mongoose');
 const Model = require('./Models.js');
 const catchHandler = require('./catchHandler.js');
