@@ -96,11 +96,9 @@ function Ploy(xAxis, yAxis, parents) {
         labels: xAxis[0],
         textinfo: "label+percent",
         textposition: "inside",
-
+        insidetextorientation: "radial"
         automargin: true,
-        size: 500,
-        hole: .4,
-        text: 'खर्च'
+        title: 'खर्च'
 
     }];
     var data2 = [{
@@ -108,12 +106,10 @@ function Ploy(xAxis, yAxis, parents) {
         values: yAxis[1],
         labels: xAxis[1],
         textinfo: "label+percent",
-
+        insidetextorientation: "radial"
         textposition: "inside",
         automargin: true,
-        hole: .4,
-        size: 500,
-        text: 'बचत'
+        title: 'बचत'
 
     }];
     var data3 = [{
@@ -123,19 +119,15 @@ function Ploy(xAxis, yAxis, parents) {
         textinfo: "label+percent",
         textposition: "inside",
         automargin: true,
-        text: 'उत्पन्न',
-        hole: .4,
-        size: 500
-
+        title: 'उत्पन्न',
+        insidetextorientation: "radial"
     }]
 
     var layout = {
         margin: {
-            autoexpand: true
+            autoexpand: false
         },
-        autosize: false,
-        height: 400,
-        width: 500,
+        autosize: true,
         grid: {
             rows: 1,
             columns: 1
