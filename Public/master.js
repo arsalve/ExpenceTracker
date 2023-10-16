@@ -125,7 +125,8 @@ function Ploy(xAxis, yAxis, parents) {
 
     var layout = {
         margin: {
-            autoexpand: false
+            autoexpand: false,
+r:10,t:10,l:10,b:10
         },
         autosize: true,
         grid: {
