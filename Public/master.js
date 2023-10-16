@@ -96,7 +96,7 @@ function Ploy(xAxis, yAxis, parents) {
         labels: xAxis[0],
         textinfo: "label+percent",
         textposition: "inside",
-        insidetextorientation: "radial"
+        insidetextorientation: "radial",
         automargin: true,
         title: 'खर्च'
 
@@ -120,7 +120,7 @@ function Ploy(xAxis, yAxis, parents) {
         textposition: "inside",
         automargin: true,
         title: 'उत्पन्न',
-        insidetextorientation: "radial"
+        insidetextorientation: "radial",
     }]
 
     var layout = {
