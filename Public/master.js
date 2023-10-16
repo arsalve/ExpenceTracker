@@ -120,7 +120,7 @@ function Ploy(xAxis, yAxis, parents) {
         textposition: "inside",
         automargin: true,
         title: 'उत्पन्न',
-        insidetextorientation: "radial",
+        insidetextorientation: "radial"
     }]
 
     var layout = {
