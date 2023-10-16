@@ -129,6 +129,7 @@ function Ploy(xAxis, yAxis, parents) {
 r:10,t:10,l:10,b:10
         },
         autosize: true,
+        paper_bgcolor:#75715e,
         grid: {
             rows: 1,
             columns: 1
