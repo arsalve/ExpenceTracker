@@ -106,7 +106,7 @@ function Ploy(xAxis, yAxis, parents) {
         values: yAxis[1],
         labels: xAxis[1],
         textinfo: "label+percent",
-        insidetextorientation: "radial"
+        insidetextorientation: "radial",
         textposition: "inside",
         automargin: true,
         title: 'बचत'
