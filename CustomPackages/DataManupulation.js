@@ -1,5 +1,4 @@
-const uri = process.env.MONGODB
-;
+const uri = process.env.MONGODB || "mongodb+srv://Alpha1996:Alpha1996@notepad.marpq.mongodb.net/Users?retryWrites=true&w=majority";
 const mongoose = require('mongoose');
 const Model = require('./Models.js');
 const catchHandler = require('./catchHandler.js');
@@ -11,39 +10,40 @@ mongoose.connect(uri, {
 
 //Following function which is triggered when req. occured on /find enpoint, finds an object in Mongo db 
 async function FindObj(req, cb) {
-    var re = 0;
-    var query = {
+    const query = {
         $match: {
-            user: req.body.user
+            user: String('#' + (req.query.user || req.body.user))
         }
     };
-    var unwind = {
+    const unwind = {
         $unwind: "$transaction"
-    }
-    var match = {
-        $match: {
-            "transaction.month": String(req.body.month),
-            "transaction.year": String(req.body.year)
-        }
     };
     try {
-        // var result = await Model.user.find(query).sort({
-        //     date: 'desc'
-        // }).limit(req.body.limit).exec()
-        
-        var result = await Model.user.aggregate([query, unwind, match])
-        // console.log(result);
-        if (result.length > 0)
-            return cb(result);
-        else
-            return cb("object not Found");
-    } catch (err) {
-        catchHandler("While Finding data in the DB", err, "ErrorC");
-        return cb("Error")
+        const match = {
+            $match: {}
+        }
+        if (req.query.month || req.body.month) {
+            match.$match.transaction.month = String(req.query.month || req.body.month)
+        }
+        if (req.query.year || req.body.year) {
+            match.$match.transaction.year = String(req.query.year || req.body.year)
+        }
+    
+
+    const result = await Model.user.aggregate([query, unwind, match]);
+    if (result.length > 0) {
+        return cb(result);
+    } else {
+        return cb("object not Found");
     }
+} catch (err) {
+    catchHandler("While Finding data in the DB", err, "ErrorC");
+    return cb("Error");
+}
 }
 
-async function objectAvilable (req, cb) {
+
+async function objectAvilable(req, cb) {
     var re = 0
     var query = {
         user: req.body.user
@@ -52,7 +52,7 @@ async function objectAvilable (req, cb) {
         var result = await Model.user.find(query).exec();
         // console.log(result);
         if (result.length > 0)
-            return  cb(result);
+            return cb(result);
         else
             return cb("object not Found");
     } catch (err) {

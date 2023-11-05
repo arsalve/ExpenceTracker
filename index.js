@@ -44,6 +44,13 @@ try {
             res.send(responce);
         });
 
+    }); 
+    app.get('/find', (req, res) => {
+        
+        var responce = DataManupulation.FindObj(req, (responce) => {
+            res.send(responce);
+        });
+
     });
     //Following Endpoint sends an entry page for user
     app.get('/*', (req, res) => {
