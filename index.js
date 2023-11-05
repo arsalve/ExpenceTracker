@@ -46,7 +46,7 @@ try {
 
     }); 
     app.get('/find', (req, res) => {
-        
+        req.manuser='#'+req.query.user;
         var responce = DataManupulation.FindObj(req, (responce) => {
             res.send(responce);
         });

@@ -151,21 +151,28 @@ function displayData() {
     document.getElementById("entries").innerHTML = tableog;
     document.getElementById("summury").innerHTML = summuryog;
     document.getElementById("cate").innerHTML = catelog;
+    var allEntries=document.querySelector("#allEntries").checked;
     var table = document.getElementById("entries");
     var summury = document.getElementById("summury");
     var cate = document.getElementById("cate");
     var today = new Date()
-    if (document.querySelector("#selectMonth").value == '')
+    if (document.querySelector("#selectMonth").value == ''&& !allEntries)
         document.querySelector("#selectMonth").value = today.getFullYear() + "-" + today.toLocaleString('default', {
             month: '2-digit'
         });;
 
-
+if (allEntries) {
+    var data = {
+        user: location.hash || "#" + prompt("enter your name")}
+}
+else{
     var data = {
         user: location.hash || "#" + prompt("enter your name"),
-        month: document.querySelector("#selectMonth").value.split("-")[1] || today.getMonth(),
-        year: document.querySelector("#selectMonth").value.split("-")[0] || today.getFullYear()
+        month: (document.querySelector("#selectMonth").value.split("-")[1]) ,
+        year: (document.querySelector("#selectMonth").value.split("-")[0])
     }
+}
+    
 
     fetch(url + "/find", {
             method: "POST", // or 'PUT'
@@ -379,6 +386,9 @@ function displayData() {
             // Handle any errors
             console.log(err);
         });
+
+
+        
 }
 // Add an event listener to the first dropdown to update the second dropdown when it changes
 firstDropdown.addEventListener('change', updateSecondDropdown);

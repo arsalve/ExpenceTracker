@@ -1,4 +1,4 @@
-const uri = process.env.MONGODB 
+const uri = process.env.MONGODB;
 const mongoose = require('mongoose');
 const Model = require('./Models.js');
 const catchHandler = require('./catchHandler.js');
@@ -10,36 +10,39 @@ mongoose.connect(uri, {
 
 //Following function which is triggered when req. occured on /find enpoint, finds an object in Mongo db 
 async function FindObj(req, cb) {
-    const query = {
+    var re = 0;
+    var query = {
         $match: {
-            user: String('#' + (req.query.user || req.body.user))
+            user: String( req.manuser || req.body.user)
         }
     };
-    const unwind = {
+    var unwind = {
         $unwind: "$transaction"
-    };
-    try {
-        const match = {
-            $match: {}
-        }
-        if (req.query.month || req.body.month) {
-            match.$match.transaction.month = String(req.query.month || req.body.month)
-        }
-        if (req.query.year || req.body.year) {
-            match.$match.transaction.year = String(req.query.year || req.body.year)
-        }
-    
-
-    const result = await Model.user.aggregate([query, unwind, match]);
-    if (result.length > 0) {
-        return cb(result);
-    } else {
-        return cb("object not Found");
     }
-} catch (err) {
-    catchHandler("While Finding data in the DB", err, "ErrorC");
-    return cb("Error");
-}
+    var result = [];
+    try {
+        if ((req.query.month || req.body.month) && (req.query.year || req.body.year)) {
+            var match = {
+                $match: {
+                    "transaction.month": String(req.query.month||req.body.month),
+                    "transaction.year": String(req.query.year || req.body.year)
+                }
+            }
+            result = await Model.user.aggregate([query, unwind, match]);
+        } else {
+
+            result = await Model.user.aggregate([query, unwind]);
+           
+        }
+        // console.log(result);
+        if (result.length > 0)
+            return cb(result);
+        else
+            return cb("object not Found");
+    } catch (err) {
+        catchHandler("While Finding data in the DB", err, "ErrorC");
+        return cb("Error")
+    }
 }
 
 
