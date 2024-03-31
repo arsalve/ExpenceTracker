@@ -8,12 +8,16 @@ mongoose.connect(uri, {
     useFindAndModify: false
 });
 
-//Following function which is triggered when req. occured on /find enpoint, finds an object in Mongo db 
+/**
+ * Finds an object in the MongoDB database based on the specified criteria.
+ * @param {Object} req - search critera.
+ * @param {Function} cb - Callback function to handle the result.
+ */
 async function FindObj(req, cb) {
     var re = 0;
     var query = {
         $match: {
-            user: String( req.manuser || req.body.user)
+            user: String(req.manuser || req.body.user)
         }
     };
     var unwind = {
@@ -24,7 +28,7 @@ async function FindObj(req, cb) {
         if ((req.query.month || req.body.month) && (req.query.year || req.body.year)) {
             var match = {
                 $match: {
-                    "transaction.month": String(req.query.month||req.body.month),
+                    "transaction.month": String(req.query.month || req.body.month),
                     "transaction.year": String(req.query.year || req.body.year)
                 }
             }
@@ -32,7 +36,7 @@ async function FindObj(req, cb) {
         } else {
 
             result = await Model.user.aggregate([query, unwind]);
-           
+
         }
         // console.log(result);
         if (result.length > 0)
@@ -44,8 +48,12 @@ async function FindObj(req, cb) {
         return cb("Error")
     }
 }
-
-
+/**
+ * this will check if object is avilable in DB or not
+ * @param {object} req search critera
+ * @param {Function} cb call back function
+ * @returns responce
+ */
 async function objectAvilable(req, cb) {
     var re = 0
     var query = {
@@ -65,8 +73,12 @@ async function objectAvilable(req, cb) {
 
 
 }
-
 //Following function which is triggered when req. occured on /Update enpoint, Updates an object in Mongo db or if the object is not present it will create new  
+/**
+ *Following function which is triggered when req. occured on /Update enpoint, Updates an object in Mongo db or if the object is not present it will create new  
+ * @param {object} req search critera
+ * @param {Function} resp call back function will return all the avilable transactions
+ */
 async function Insert(req, resp) {
 
     try {
@@ -98,10 +110,40 @@ async function Insert(req, resp) {
 
 
 }
+/**
+ * Deletes a transaction based on its ID.
+ * @param {object} req search critera
+ * @param {Function} resp call back function will return all the avilable transactions
+ */
+async function delEntry(req, resp) {
+    try {
+        const obj = new Model.user(req.body);
+        const query = {
+            user: obj.user
+        };
 
+        // Find the user
+        const user = await Model.user.findOne(query);
 
+        if (!user) {
+            // User not found
+            return resp.status(404).json({ error: 'User not found' });
+        }
 
+        // Remove the transaction with the specified ID
+        user.transaction = user.transaction.filter(t => t.id != obj.Deid);
+        await user.save();
+
+        // Transaction deleted successfully
+        FindObj(req, resp);
+    } catch (error) {
+        console.error('Error deleting transaction:', error.message);
+        // Handle the error (e.g., send an error response)
+        resp.status(500).json({ error: 'Internal server error' });
+    }
+}
 module.exports = {
     'FindObj': FindObj,
-    'Insert': Insert
+    'Insert': Insert,
+    "delEntry": delEntry
 }

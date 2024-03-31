@@ -2,8 +2,8 @@
 var dropdownValues = {
 
     "Savings": ["म्युच्युअल फंड्स", "एफडी", "आरडी", "सोने", "पीपीएफ", "इतर गुंतवणूक"],
-    "Income": ["पगार", "गुंतवणूक व परतावा", "इतर उत्पन्न","मागील बाकी"],
-    "Expence": ["आहार", "किराणा", "घरातील खर्च", "परिवहन", "मनोरंजन", "दूरसंचार", "आरोग्य", "वैयक्तिक काळजी","विमा", "कपडे", "वाहन देखरेख", "इंधन", "रोकड", "वॉलेट ट्रान्स्फर", "इतर खर्च"]
+    "Income": ["पगार", "गुंतवणूक व परतावा", "इतर उत्पन्न", "मागील बाकी"],
+    "Expence": ["आहार", "किराणा", "घरातील खर्च", "परिवहन", "मनोरंजन", "दूरसंचार", "आरोग्य", "वैयक्तिक काळजी", "विमा", "कपडे", "वाहन देखरेख", "इंधन", "रोकड", "वॉलेट ट्रान्स्फर", "इतर खर्च"]
 };
 // Get references to the form and table elements
 var form = document.querySelector('form');
@@ -16,8 +16,9 @@ const firstDropdown = document.getElementById('ExpenseType');
 const secondDropdown = document.getElementById('ExpenseOption');
 // Initialize data array
 var data = [];
-
-// Define the options for the second dropdown based on the selection in the first dropdown
+/**
+ * Define the options for the second dropdown based on the selection in the first dropdown
+ */
 function updateSecondDropdown() {
     // Clear the current options in the second dropdown
     secondDropdown.innerHTML = '';
@@ -59,7 +60,8 @@ function sumArray(arr) {
     });
     return sum;
 }
-
+/** Creates graphs
+ */
 function Ploy(xAxis, yAxis, parents) {
     // var labels=((["खर्च","बचत","उत्पन्न"].concat(xAxis[0])).concat(xAxis[1])).concat(xAxis[2])
     // var sum1=Math.abs((-sumArray(yAxis[0]))-sumArray(yAxis[1])+sumArray(yAxis[2]));
@@ -126,10 +128,13 @@ function Ploy(xAxis, yAxis, parents) {
     var layout = {
         margin: {
             autoexpand: false,
-            r:10,t:10,l:10,b:10
+            r: 10,
+            t: 10,
+            l: 10,
+            b: 10
         },
         autosize: true,
-        paper_bgcolor:"#75715e",
+        paper_bgcolor: "#75715e",
         showlegend: true,
         grid: {
             rows: 1,
@@ -146,33 +151,35 @@ function Ploy(xAxis, yAxis, parents) {
 
 }
 
-// Get the table element from HTML
+/**
+ * Get the table element from HTML
+ */
 function displayData() {
     document.getElementById("entries").innerHTML = tableog;
     document.getElementById("summury").innerHTML = summuryog;
     document.getElementById("cate").innerHTML = catelog;
-    var allEntries=document.querySelector("#allEntries").checked;
+    var allEntries = document.querySelector("#allEntries").checked;
     var table = document.getElementById("entries");
     var summury = document.getElementById("summury");
     var cate = document.getElementById("cate");
     var today = new Date()
-    if (document.querySelector("#selectMonth").value == ''&& !allEntries)
+    if (document.querySelector("#selectMonth").value == '' && !allEntries)
         document.querySelector("#selectMonth").value = today.getFullYear() + "-" + today.toLocaleString('default', {
             month: '2-digit'
         });;
 
-if (allEntries) {
-    var data = {
-        user: location.hash || "#" + prompt("enter your name")}
-}
-else{
-    var data = {
-        user: location.hash || "#" + prompt("enter your name"),
-        month: (document.querySelector("#selectMonth").value.split("-")[1]) ,
-        year: (document.querySelector("#selectMonth").value.split("-")[0])
+    if (allEntries) {
+        var data = {
+            user: location.hash || "#" + prompt("enter your name")
+        }
+    } else {
+        var data = {
+            user: location.hash || "#" + prompt("enter your name"),
+            month: (document.querySelector("#selectMonth").value.split("-")[1]),
+            year: (document.querySelector("#selectMonth").value.split("-")[0])
+        }
     }
-}
-    
+
 
     fetch(url + "/find", {
             method: "POST", // or 'PUT'
@@ -263,6 +270,16 @@ else{
                     var cell4 = document.createElement("td");
                     cell4.innerHTML = item.description;
                     row.appendChild(cell4);
+                    var cell5 = document.createElement("td");
+                    const button = document.createElement("button");
+                    button.innerText = "नोंदणी काढा";
+                    button.className="btn-primary text-center"
+                    button.onclick = function () {
+                        Delete(Entry.transaction.id, this)
+                    }
+                    cell5.appendChild(button);
+
+                    row.appendChild(cell5);
 
                     // Append the row to the table
                     table.appendChild(row);
@@ -295,33 +312,34 @@ else{
                         var cell2 = document.createElement("td");
                         cell2.innerHTML = subObj[subKey];
                         SumRow.appendChild(cell1)
-                    
-                    switch (key) {
-                        case "credit":
 
-                            cell2.style.backgroundColor = "#12b1127d";
-                            
-                            SumRow.appendChild(cell2)
-                            break;
-                        case "debit":
+                        switch (key) {
+                            case "credit":
 
-                            cell2.style.backgroundColor = "#b119127d";
-                            SumRow.appendChild(cell2)
+                                cell2.style.backgroundColor = "#12b1127d";
 
-                            break;
-                        case "Savings":
+                                SumRow.appendChild(cell2)
+                                break;
+                            case "debit":
 
-                            cell2.style.backgroundColor = "#fff0377d";
-                            SumRow.appendChild(cell2)
-                            break;
+                                cell2.style.backgroundColor = "#b119127d";
+                                SumRow.appendChild(cell2)
 
-                        default:
-                            cell2.innerHTML = "";
-                            break;
+                                break;
+                            case "Savings":
+
+                                cell2.style.backgroundColor = "#fff0377d";
+                                SumRow.appendChild(cell2)
+                                break;
+
+                            default:
+                                cell2.innerHTML = "";
+                                break;
+                        }
+                        cate.appendChild(SumRow);
+
                     }
-                    cate.appendChild(SumRow);
-
-                }}
+                }
                 Ploy(xAxis, yAxis, parent);
                 var IncomeRow = document.createElement("tr");
 
@@ -388,7 +406,7 @@ else{
         });
 
 
-        
+
 }
 // Add an event listener to the first dropdown to update the second dropdown when it changes
 firstDropdown.addEventListener('change', updateSecondDropdown);
@@ -446,5 +464,43 @@ form.addEventListener('submit', (event) => {
         }
     }
 });
+/**
+ * Deletes a transaction based on its ID.
+ * @param {string} id - The ID of the transaction to delete.
+ * @param {HTMLElement} element - The HTML element associated with the transaction.
+ */
+function Delete(id, element) {
+    // Prompt user for confirmation
+    var cnf = prompt("Type confirm to delete");
+    if (cnf === "confirm") {
+        // Get user input (hash or prompt)
+        var user = location.hash || "#" + prompt("enter your name");
+        var req = {
+            user: user,
+            Deid: id
+        };
+
+        // Convert request object to JSON string
+        var json = JSON.stringify(req);
+
+        // Make an AJAX request to your server
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', url + '/Delete', true);
+        xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+        xhr.send(json);
+
+        // Hide save button and reset form fields
+        element.innerHTML = "Entry is being Deleted";
+
+        // Handle AJAX response
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4) {
+                data = [];
+                alert("Entry Deleted");
+                displayData(); // Assuming you have a function to refresh the displayed data
+            }
+        };
+    }
+}
 // Initialize the second dropdown with the default options
 updateSecondDropdown();

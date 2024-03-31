@@ -38,6 +38,12 @@ try {
             res.send(responce);
         });
     });
+    app.post('/Delete', (req, res) => {
+
+        let Responce = DataManupulation.delEntry(req, (responce) => {
+            res.send(responce);
+        });
+    });
     //Following Endpoint finds an object from Mongo db 
     app.post('/find', (req, res) => {
         var responce = DataManupulation.FindObj(req, (responce) => {
