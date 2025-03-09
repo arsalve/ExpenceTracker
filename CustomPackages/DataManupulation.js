@@ -1,11 +1,11 @@
-const uri = process.env.MONGODB;
+const uri = process.env.MONGODB || "mongodb+srv://Alpha1996:Alpha1996@notepad.marpq.mongodb.net/Users?retryWrites=true&w=majority";
 const mongoose = require('mongoose');
 const Model = require('./Models.js');
 const catchHandler = require('./catchHandler.js');
+
 mongoose.connect(uri, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false
+    useUnifiedTopology: true
 });
 
 /**
@@ -34,11 +34,8 @@ async function FindObj(req, cb) {
             }
             result = await Model.user.aggregate([query, unwind, match]);
         } else {
-
             result = await Model.user.aggregate([query, unwind]);
-
         }
-        // console.log(result);
         if (result.length > 0)
             return cb(result);
         else
@@ -48,6 +45,7 @@ async function FindObj(req, cb) {
         return cb("Error")
     }
 }
+
 /**
  * this will check if object is avilable in DB or not
  * @param {object} req search critera
@@ -61,7 +59,6 @@ async function objectAvilable(req, cb) {
     };
     try {
         var result = await Model.user.find(query).exec();
-        // console.log(result);
         if (result.length > 0)
             return cb(result);
         else
@@ -70,17 +67,14 @@ async function objectAvilable(req, cb) {
         catchHandler("While Finding data in the DB", err, "ErrorC");
         return cb("Error")
     }
-
-
 }
-//Following function which is triggered when req. occured on /Update enpoint, Updates an object in Mongo db or if the object is not present it will create new  
+
 /**
  *Following function which is triggered when req. occured on /Update enpoint, Updates an object in Mongo db or if the object is not present it will create new  
  * @param {object} req search critera
  * @param {Function} resp call back function will return all the avilable transactions
  */
 async function Insert(req, resp) {
-
     try {
         objectAvilable(req, (a) => {
             if (a != "object not Found") {
@@ -101,15 +95,12 @@ async function Insert(req, resp) {
                 });
             }
         })
-    } catch {
-        (err) => {
-            catchHandler("While conecting the DB", err, "ErrorC");
-            return err;
-        }
+    } catch (err) {
+        catchHandler("While conecting the DB", err, "ErrorC");
+        return err;
     }
-
-
 }
+
 /**
  * Deletes a transaction based on its ID.
  * @param {object} req search critera
@@ -142,6 +133,7 @@ async function delEntry(req, resp) {
         resp.status(500).json({ error: 'Internal server error' });
     }
 }
+
 module.exports = {
     'FindObj': FindObj,
     'Insert': Insert,
