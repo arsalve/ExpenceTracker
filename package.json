@@ -9,16 +9,17 @@
   "author": "Ashish Salve",
   "license": "ISC",
   "dependencies": {
-    "chalk": "^3.0.0",
-    "cheerio": "^1.0.0-rc.10",
+    "chalk": "^5.0.0",
+    "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "mongodb": "^3.6.10",
-    "mongoose": "^5.13.3",
+    "ExpenceTracker": "file:",
+    "express": "^4.18.2",
+    "mongodb": "^4.10.0",
+    "mongoose": "^6.6.5",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.12",
+    "nodemon": "^2.0.20",
     "request": "^2.88.2",
-    "yargs": "^16.2.0",
-    "ytdl-core": "^4.9.0"
+    "yargs": "^17.6.2",
+    "ytdl-core": "^4.11.0"
   }
 }
