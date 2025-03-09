@@ -1,31 +1,32 @@
-const chalk = require('chalk');
-const ErrorC = chalk.red.inverse;
-const suc = chalk.greenBright;
-const Warning = chalk.yellowBright;
+const colors = require('colors');
 
-const good = chalk.cyanBright;
+const ErrorC = colors.red.bold;
+const suc = colors.green;
+const Warning = colors.yellow;
+const good = colors.cyan;
 
 function catchHandler(location, message, type, debug = true) {
-
-    if (debug == true) {
+    if (debug) {
+        let color;
         switch (type) {
             case "Error":
-                color = ErrorC
+                color = ErrorC;
                 break;
             case "sucess":
-                color = suc
+                color = suc;
                 break;
             case "Warning":
-                color = Warning
+                color = Warning;
                 break;
             case "good":
-                color = good
+                color = good;
                 break;
             default:
-                color = good
+                color = good;
                 break;
         }
-        console.error(color("Log at " + location + "\n information : " + message))
+        console.error(color(`Log at ${location}\n information : ${message}`));
     }
 }
+
 module.exports = catchHandler;

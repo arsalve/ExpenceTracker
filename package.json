@@ -9,14 +9,16 @@
   "author": "Ashish Salve",
   "license": "ISC",
   "dependencies": {
-    "chalk": "^5.0.0",
+    "chalk": "^5.4.1",
     "cheerio": "^1.0.0-rc.12",
+    "colors": "^1.4.0",
     "cors": "^2.8.5",
     "ExpenceTracker": "file:",
     "express": "^4.18.2",
     "mongodb": "^4.10.0",
     "mongoose": "^6.6.5",
     "mysql": "^2.18.1",
+    "request": "^2.88.2",
     "yargs": "^17.6.2",
     "ytdl-core": "^4.11.0"
   }
