@@ -25,6 +25,7 @@
             padding: 2%;
             background-color: #272822;
             color: #f8f8f2;
+            transition: background-color 0.5s ease-in-out;
         }
 
         h1,
@@ -43,6 +44,7 @@
             color: #f8f8f2;
             width: 100%;
             height: 25%;
+            transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
         }
 
         .form-control2 {
@@ -55,15 +57,20 @@
             background-color: #66d9ef;
             border-color: #66d9ef;
             color: #272822;
+            transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
         }
 
-        /* Add some style for the table */
+        .btn-primary:hover {
+            background-color: #272822;
+            color: #66d9ef;
+        }
+
         table {
             border-collapse: collapse;
             width: 95%;
             margin: 20px;
-            background-color: #272822; /* Monokai background */
-            color: #f8f8f2; /* Monokai foreground */
+            background-color: #272822;
+            color: #f8f8f2;
         }
 
         th,
@@ -85,10 +92,9 @@
             background-color: #272822;
         }
 
-        /* Media queries */
         @media only screen and (max-width: 768px) {
             .form-control {
-                height: 25%;
+                height: auto;
                 font-size: 14px;
                 padding-top: 5px;
                 padding-bottom: 5px;
@@ -108,6 +114,10 @@
                 padding-bottom: 5px;
                 font-size: 14px;
             }
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
         }
     </style>
     <!-- Include jQuery and tablesorter -->
@@ -129,7 +139,7 @@
 <body>
     <h1>वैयक्तिक खातेवही</h1>
     <div class="form-control">
-        <form class="form-group" class="form-group" action="" method="post">
+        <form class="form-group" action="" method="post">
             <table>
                 <tr>
                     <th class="form-control2">दिनांक</th>
@@ -147,8 +157,7 @@
                             <option value="Savings">बचत </option>
                         </select></td>
                     <td>
-                        <select name="description" type="text" class="form-control selectWidth" id="ExpenseOption"
-                            list="options" name="ExpenseOption">
+                        <select name="description" type="text" class="form-control selectWidth" id="ExpenseOption" list="options" name="ExpenseOption">
                             <data-list class="dropdown-menu" id="options">
                                 <option class="dropdown-item" value="Salary">Salary</option>
                                 <option class="dropdown-item" value="Income Other">Income Other</option>
@@ -162,20 +171,19 @@
                                 <option class="dropdown-item" value="Cash">Cash</option>
                                 <option class="dropdown-item" value="Exp Other">Exp Other</option>
                             </data-list>
-                    </td></select>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
-                    <td colspan="4"><input id="saveData" class="btn-primary text-center" type="submit" value="नोंद करा">
-                    </td>
+                    <td colspan="4"><input id="saveData" class="btn-primary text-center" type="submit" value="नोंद करा"></td>
                 </tr>
             </table>
         </form>
     </div>
 
-    <div id=displaydata>
-        <!-- Add another table element to display the entries -->
+    <div id="displaydata">
         <div class="form-control2">
-            <form class="form-group" class="form-group">
+            <form class="form-group">
                 <table>
                     <tr>
                         <th>दिनांक</th>
@@ -196,7 +204,6 @@
         </div>
         <h3>खात्या चा तपशील</h3>
         <table id="summury" class="tablesorter">
-            <!-- Add a table header row with four columns -->
             <thead>
                 <tr>
                     <th>प्रकार</th>
@@ -209,7 +216,6 @@
         </table>
         <h3>खात्या चा वर्गवार तपशील </h3>
         <table id="cate" class="tablesorter">
-            <!-- Add a table header row with four columns -->
             <thead>
                 <tr>
                     <th>प्रकार</th>
@@ -223,13 +229,12 @@
         <h3>व्यवहार तपशील</h3>
 
         <table id="entries" class="tablesorter">
-            <!-- Add a table header row with four columns -->
             <thead>
                 <tr>
-                    <th>क्रमांक </th>
+                    <th>क्रमांक</th>
                     <th>दिनांक</th>
                     <th>रक्कम</th>
-                    <th>प्रकार </th>
+                    <th>प्रकार</th>
                     <th>तपशील</th>
                     <th>नोंदणी काढा</th>
                 </tr>
@@ -240,7 +245,6 @@
         </table>
 
         <table id="sunburst1">
-            <!-- Add a table header row with four columns -->
             <thead>
                 <tr>
                     <th colspan=3>
@@ -264,12 +268,11 @@
                 </tr>
             </thead>
         </table>
-    </div><!-- Plotly chart will be drawn inside this DIV -->
+    </div>
 
     <script type="text/javascript" src="./master.js"></script>
     <script>
         $(document).ready(function () {
-            // Apply tablesorter to the tables
             $(".tablesorter").tablesorter();
         });
     </script>
