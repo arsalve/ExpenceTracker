@@ -3,115 +3,264 @@
 
 <head>
     <title>वैयक्तिक खातेवही</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Custom Dark Theme Styling -->
+    <script>
+        var url = '';
+        if (window.location.href.includes("localhost:8080")) {
+            url = "http://localhost:8080";
+        } else {
+            url = "https://kharchapani.onrender.com";
+        }
+    </script>
+
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src='https://cdn.plot.ly/plotly-2.26.0.min.js'></script>
+    <!-- Monokai dark theme -->
     <style>
+        html,
         body {
-            background-color: #1e1e1e;
-            color: #f5f5f5;
-            font-family: "Roboto", sans-serif;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 2%;
         }
 
-        h1 {
-            color: #66d9ef;
-            margin-top: 20px;
+        body {
+            background-color: #272822;
+            color: #f8f8f2;
         }
 
-        .form-control, .form-select {
-            background-color: #333;
-            color: #fff;
-            border: 1px solid #444;
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            padding: 2%;
+        }
+
+        .form-control {
+            background-color: #49483e;
+            border-color: #75715e;
+            color: #f8f8f2;
+            width: 100%;
+            height: 25%;
+        }
+
+        .form-control2 {
+            background-color: #272822;
+            border-color: #75715e;
+            color: #f8f8f2;
         }
 
         .btn-primary {
-            background-color: #007bff;
-            border: none;
-            color: #fff;
-            transition: 0.3s;
+            background-color: #66d9ef;
+            border-color: #66d9ef;
+            color: #272822;
         }
 
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
-
+        /* Add some style for the table */
         table {
-            color: #f5f5f5;
+            border-collapse: collapse;
+            width: 95%;
+            margin: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #75715e;
+            padding: 10px;
         }
 
         th {
-            background-color: #444;
+            background-color: #49483e;
         }
 
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 1.5rem;
+        /* Media queries */
+        @media only screen and (max-width: 768px) {
+            .form-control {
+                height: 25%;
+                font-size: 14px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                margin-bottom: 10px;
             }
 
             table {
-                font-size: 0.85rem;
+                width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+                font-size: 14px;
             }
 
-            .btn-primary {
-                width: 100%;
+            th,
+            td {
+                padding-top: 5px;
+                padding-bottom: 5px;
+                font-size: 14px;
             }
         }
     </style>
+    <!-- Include jQuery and tablesorter -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/css/theme.default.min.css" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Z9B3ZFLP7"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            window.dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-4Z9B3ZFLP7');
+    </script>
+
 </head>
 
 <body>
-    <div class="container my-5">
-        <h1 class="text-center">वैयक्तिक खातेवही</h1>
-        <form class="p-3 bg-dark rounded">
-            <div class="row g-3">
-                <div class="col-md-6 col-lg-3">
-                    <label for="date" class="form-label">दिनांक:</label>
-                    <input type="date" id="date" class="form-control" required>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <label for="amount" class="form-label">रक्कम:</label>
-                    <input type="number" id="amount" class="form-control" required>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <label for="type" class="form-label">प्रकार:</label>
-                    <select id="type" class="form-select">
-                        <option value="credit">उत्पन्न</option>
-                        <option value="debit">खर्च</option>
-                        <option value="savings">बचत</option>
-                    </select>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <label for="description" class="form-label">तपशील:</label>
-                    <input type="text" id="description" list="options" class="form-control">
-                    <datalist id="options">
-                        <option value="Salary">
-                        <option value="Food">
-                        <option value="Fuel">
-                    </datalist>
-                </div>
-            </div>
-            <div class="text-center mt-4">
-                <button type="submit" class="btn btn-primary px-4">नोंद करा</button>
-            </div>
+    <h1>वैयक्तिक खातेवही</h1>
+    <div class="form-control">
+        <form class="form-group" class="form-group" action="" method="post">
+            <table>
+                <tr>
+                    <th class="form-control2">दिनांक</th>
+                    <th class="form-control2">रक्कम</th>
+                    <th class="form-control2">प्रकार </th>
+                    <th class="form-control2">तपशील</th>
+                </tr>
+
+                <tr class="input-field-container">
+                    <td><input type="date" class="form-control selectWidth" name="date" id="date" required></td>
+                    <td><input id="ammount" class="form-control selectWidth" type="number" name="amount" required></td>
+                    <td><select name="type" class="form-control selectWidth" id="ExpenseType">
+                            <option value="credit">उत्पन्न</option>
+                            <option value="debit">खर्च</option>
+                            <option value="Savings">बचत </option>
+                        </select></td>
+                    <td>
+                        <select name="description" type="text" class="form-control selectWidth" id="ExpenseOption"
+                            list="options" name="ExpenseOption">
+                            <data-list class="dropdown-menu" id="options">
+                                <option class="dropdown-item" value="Salary">Salary</option>
+                                <option class="dropdown-item" value="Income Other">Income Other</option>
+                                <option class="dropdown-item" value="intrest">intrest</option>
+                                <option class="dropdown-item" value="Savings - MF">Savings - MF</option>
+                                <option class="dropdown-item" value="Savings - Bank">Savings - Bank</option>
+                                <option class="dropdown-item" value="Savings - Other">Savings - Other</option>
+                                <option class="dropdown-item" value="Food">Food</option>
+                                <option class="dropdown-item" value="Fuel">Fuel</option>
+                                <option class="dropdown-item" value="Vehicle Maintenance">Vehicle Maintenance</option>
+                                <option class="dropdown-item" value="Cash">Cash</option>
+                                <option class="dropdown-item" value="Exp Other">Exp Other</option>
+                            </data-list>
+                    </td></select>
+                </tr>
+                <tr>
+                    <td colspan="4"><input id="saveData" class="btn-primary text-center" type="submit" value="नोंद करा">
+                    </td>
+                </tr>
+            </table>
         </form>
-        <div class="mt-5">
-            <h2 class="text-center">तपशील</h2>
-            <table class="table table-dark table-striped table-hover text-center">
-                <thead>
+    </div>
+
+    <div id=displaydata>
+        <!-- Add another table element to display the entries -->
+        <div class="form-control2">
+            <form class="form-group" class="form-group">
+                <table>
                     <tr>
                         <th>दिनांक</th>
-                        <th>रक्कम</th>
-                        <th>प्रकार</th>
-                        <th>तपशील</th>
+                        <th>
+                            <div class="form-group">
+                                <label for="selectDate">महिना व वर्ष निवडा</label>
+                                <input type="Month" id="selectMonth" class="form-control selectWidth" required>
+                               
+                                </select>
+                            </div>
+                        </th>
+                        <th colspan="3">
+                         <input type="checkbox" id="allEntries" name="allEntries" value="allEntries"><label for="allEntries"> सर्व नोंदी</label><br>
+                          <td><input class="btn-primary text-center" onclick="displayData()" value="शोधा"></td>
+                        </th>
                     </tr>
-                </thead>
-                <tbody id="data">
-                    <!-- Dynamic rows will be generated here -->
-                </tbody>
-            </table>
+                </table>
+            </form>
         </div>
-    </div>
+        <h3>खात्या चा तपशील</h3>
+        <table id="summury" class="tablesorter">
+            <!-- Add a table header row with four columns -->
+            <thead>
+                <tr>
+                    <th>प्रकार</th>
+                    <th>रक्कम</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Your dynamic data rows go here -->
+            </tbody>
+        </table>
+        <h3>खात्या चा वर्गवार तपशील </h3>
+        <table id="cate" class="tablesorter">
+            <!-- Add a table header row with four columns -->
+            <thead>
+                <tr>
+                    <th>प्रकार</th>
+                    <th>रक्कम</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Your dynamic data rows go here -->
+            </tbody>
+        </table>
+        <h3>व्यवहार तपशील</h3>
+
+        <table id="entries" class="tablesorter">
+            <!-- Add a table header row with four columns -->
+            <thead>
+                <tr>
+                    <th>क्रमांक </th>
+                    <th>दिनांक</th>
+                    <th>रक्कम</th>
+                    <th>प्रकार </th>
+                    <th>तपशील</th>
+                    <th>नोंदणी काढा</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Your dynamic data rows go here -->
+            </tbody>
+        </table>
+
+        <table id="sunburst1">
+            <!-- Add a table header row with four columns -->
+            <thead>
+                <tr>
+                    <th colspan=3>
+                        <div id='sunburst'></th>
+                </tr>
+                <tr>
+                    <th>
+                        <div id='Exp'></th>
+                </tr>
+                <tr>
+                    <th>
+                        <div id='Save'></th>
+                </tr>
+                <tr>
+                    <th>
+                        <div id='Income'></th>
+                </tr>
+            </thead>
+        </table>
+    </div><!-- Plotly chart will be drawn inside this DIV -->
+
+    <script type="text/javascript" src="./master.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Apply tablesorter to the tables
+            $(".tablesorter").tablesorter();
+        });
+    </script>
 </body>
 
 </html>
