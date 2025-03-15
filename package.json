@@ -9,7 +9,6 @@
   "author": "Ashish Salve",
   "license": "ISC",
   "dependencies": {
-    "chalk": "^5.4.2",
     "cheerio": "^1.0.0-rc.12",
     "colors": "^1.4.1",
     "cors": "^2.8.5",
