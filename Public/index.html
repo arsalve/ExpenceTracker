@@ -64,6 +64,79 @@
             background-color: #272822;
             color: #66d9ef;
         }
+
+        table {
+            border-collapse: collapse;
+            width: 95%;
+            margin: 20px;
+            background-color: #272822;
+            color: #f8f8f2;
+        }
+
+        th,
+        td {
+            border: 1px solid #75715e;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #49483e;
+            color: #f8f8f2;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #3b3a32;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #272822;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .form-control {
+                height: auto;
+                font-size: 14px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                margin-bottom: 10px;
+            }
+
+            table {
+                width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+                font-size: 14px;
+            }
+
+            th,
+            td {
+                padding-top: 5px;
+                padding-bottom: 5px;
+                font-size: 14px;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .tablesorter {
+            background-color: #272822;
+            color: #f8f8f2;
+        }
+
+        .tablesorter th {
+            background-color: #49483e;
+            color: #f8f8f2;
+        }
+
+        .tablesorter tbody tr:nth-child(odd) {
+            background-color: #3b3a32;
+        }
+
+        .tablesorter tbody tr:nth-child(even) {
+            background-color: #272822;
+        }
     </style>
     <!-- Include jQuery and tablesorter -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -147,9 +220,29 @@
             </form>
         </div>
         <h3>खात्या चा तपशील</h3>
-        <div id="summury"></div>
+        <table id="summury" class="tablesorter">
+            <thead>
+                <tr>
+                    <th>प्रकार</th>
+                    <th>रक्कम</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Your dynamic data rows go here -->
+            </tbody>
+        </table>
         <h3>खात्या चा वर्गवार तपशील </h3>
-        <div id="cate"></div>
+        <table id="cate" class="tablesorter">
+            <thead>
+                <tr>
+                    <th>प्रकार</th>
+                    <th>रक्कम</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Your dynamic data rows go here -->
+            </tbody>
+        </table>
         <h3>व्यवहार तपशील</h3>
         <div id="entries"></div>
         <div id='sunburst'></div>
