@@ -1,21 +1,24 @@
 // Define dropdown values
 var dropdownValues = {
-
     "Savings": ["म्युच्युअल फंड्स", "एफडी", "आरडी", "सोने", "पीपीएफ", "इतर गुंतवणूक"],
     "Income": ["पगार", "गुंतवणूक व परतावा", "इतर उत्पन्न", "मागील बाकी"],
-    "Expence": ["आहार", "किराणा", "घरातील खर्च", "परिवहन", "मनोरंजन", "दूरसंचार", "आरोग्य", "वैयक्तिक काळजी", "विमा", "कपडे", "वाहन देखरेख", "इंधन", "रोकड", "वॉलेट ट्रान्स्फर", "इतर खर्च"]
+    "Expence": ["आहार", "किराणा", "घरातील खर्च", "परिवहन", "मनोरंजन", "दूरसंचार", "आरोग्य", "वैयक्तिक खर्च"]
 };
+
 // Get references to the form and table elements
 var form = document.querySelector('form');
 var table = document.querySelector('table');
 const tableog = document.getElementById("entries").innerHTML;
 const summuryog = document.getElementById("summury").innerHTML;
 const catelog = document.getElementById("cate").innerHTML;
+
 // Get references to the two dropdown lists
 const firstDropdown = document.getElementById('ExpenseType');
 const secondDropdown = document.getElementById('ExpenseOption');
+
 // Initialize data array
 var data = [];
+
 /**
  * Define the options for the second dropdown based on the selection in the first dropdown
  */
@@ -54,44 +57,14 @@ function updateSecondDropdown() {
 
 function sumArray(arr) {
     let sum = 0;
-    // Calculation the sum using forEach
     arr.forEach(x => {
         sum += Number(x);
     });
     return sum;
 }
-/** Creates graphs
- */
+
+/** Creates graphs */
 function Ploy(xAxis, yAxis, parents) {
-    // var labels=((["खर्च","बचत","उत्पन्न"].concat(xAxis[0])).concat(xAxis[1])).concat(xAxis[2])
-    // var sum1=Math.abs((-sumArray(yAxis[0]))-sumArray(yAxis[1])+sumArray(yAxis[2]));
-    // var Debit1=sumArray(yAxis[0]);
-    // var Saving1=sumArray(yAxis[1]);
-    // var Income1=sumArray(yAxis[2]);
-    // var value=(([Debit1,Saving1,Income1]).concat(yAxis[0])).concat(yAxis[1])).concat(yAxis[2]);
-    // var parent=((["",""].concat(parents[0])).concat(parents[1])).concat(parents[2]);
-    // var dataS = [{
-    //     type: "sunburst",
-    //     labels: labels,
-    //     parents: parent,
-    //     values:  value,
-    //     outsidetextfont: {size: 20, color: "#377eb8"},
-    //     leaf: {opacity: 0.4},
-    //     marker: {line: {width: 2}},
-    //   }];
-
-    //   var layoutS = {
-    //     margin: {l: 0, r: 0, b: 0, t: 0},
-    //     width: 500,
-    //     height: 500
-    //   };
-
-
-    //   Plotly.newPlot('sunburst', dataS, layoutS);
-
-
-    //
-
     var data = [{
         type: "pie",
         values: yAxis[0],
@@ -100,8 +73,8 @@ function Ploy(xAxis, yAxis, parents) {
         textposition: "inside",
         insidetextorientation: "radial",
         automargin: true,
-        title: 'खर्च'
-
+        title: 'खर्च',
+        marker: { colors: ['#ff7f0e', '#1f77b4', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'] }
     }];
     var data2 = [{
         type: "pie",
@@ -111,8 +84,8 @@ function Ploy(xAxis, yAxis, parents) {
         insidetextorientation: "radial",
         textposition: "inside",
         automargin: true,
-        title: 'बचत'
-
+        title: 'बचत',
+        marker: { colors: ['#ff7f0e', '#1f77b4', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'] }
     }];
     var data3 = [{
         type: "pie",
@@ -122,7 +95,8 @@ function Ploy(xAxis, yAxis, parents) {
         textposition: "inside",
         automargin: true,
         title: 'उत्पन्न',
-        insidetextorientation: "radial"
+        insidetextorientation: "radial",
+        marker: { colors: ['#ff7f0e', '#1f77b4', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'] }
     }]
 
     var layout = {
@@ -134,7 +108,11 @@ function Ploy(xAxis, yAxis, parents) {
             b: 10
         },
         autosize: true,
-        paper_bgcolor: "#75715e",
+        paper_bgcolor: "#272822",
+        plot_bgcolor: "#272822",
+        font: {
+            color: "#f8f8f2"
+        },
         showlegend: true,
         grid: {
             rows: 1,
@@ -142,13 +120,9 @@ function Ploy(xAxis, yAxis, parents) {
         }
     };
 
-
-
     Plotly.newPlot('Exp', data, layout);
     Plotly.newPlot('Save', data2, layout);
     Plotly.newPlot('Income', data3, layout);
-
-
 }
 
 /**
@@ -180,7 +154,6 @@ function displayData() {
         }
     }
 
-
     fetch(url + "/find", {
             method: "POST", // or 'PUT'
             headers: {
@@ -189,7 +162,6 @@ function displayData() {
             body: JSON.stringify(data)
         })
         .then((res) => {
-            // Convert the response into a JSON object 
             var total = 0;
             var savings = 0;
             var expence = 0;
@@ -215,10 +187,8 @@ function displayData() {
                 credit: {}
             };
             res.json().then((data) => {
-                // Loop through the data
                 var TX = data;
                 TX.forEach((Entry) => {
-                    // Get the month from the date
                     var item = Entry.transaction;
                     var element = item.description;
                     var type = item.type;
@@ -229,12 +199,10 @@ function displayData() {
                     } else {
                         counters[type][element] = Number(counters[type][element] ? counters[type][element] + Number(item.amount) : Number(item.amount));
                     }
-                    // Create a new table row
                     var row = document.createElement("tr");
                     var cell1 = document.createElement("td");
                     cell1.innerHTML = item.id;
                     row.appendChild(cell1);
-                    // Create and append cells for each column
                     var cell1 = document.createElement("td");
                     cell1.innerHTML = item.date;
                     row.appendChild(cell1);
@@ -281,7 +249,6 @@ function displayData() {
 
                     row.appendChild(cell5);
 
-                    // Append the row to the table
                     table.appendChild(row);
                     if (item.type == "credit") {
                         total = total + Number(item.amount);
@@ -343,7 +310,6 @@ function displayData() {
                 Ploy(xAxis, yAxis, parent);
                 var IncomeRow = document.createElement("tr");
 
-                // Create and append cells for each column
                 var cell1 = document.createElement("td");
                 cell1.innerHTML = "एकूण  उत्पन्न";
                 cell1.style.backgroundColor = "#12b1127d";
@@ -353,13 +319,11 @@ function displayData() {
                 cell2.innerHTML = income;
                 IncomeRow.appendChild(cell2);
 
-                // Append the row to the table
                 summury.appendChild(IncomeRow);
 
 
                 var expenceRow = document.createElement("tr");
 
-                // Create and append cells for each column
                 var cell1 = document.createElement("td");
                 cell1.innerHTML = "एकूण खर्च";
                 cell1.style.backgroundColor = "#b119127d";
@@ -368,11 +332,9 @@ function displayData() {
                 var cell2 = document.createElement("td");
                 cell2.innerHTML = expence;
                 expenceRow.appendChild(cell2);
-                // Append the row to the table
                 summury.appendChild(expenceRow);
 
                 var Savingsrow = document.createElement("tr");
-                // Create and append cells for each column
                 var cell1 = document.createElement("td");
                 cell1.innerHTML = "एकूण बचत";
                 cell1.style.backgroundColor = "#fff0377d";
@@ -382,12 +344,10 @@ function displayData() {
                 cell2.innerHTML = savings;
                 Savingsrow.appendChild(cell2);
 
-                // Append the row to the table
                 summury.appendChild(Savingsrow);
 
                 var Totalrow = document.createElement("tr");
 
-                // Create and append cells for each column
                 var cell1 = document.createElement("td");
                 cell1.innerHTML = "शिल्लक रक्कम";
                 Totalrow.appendChild(cell1);
@@ -396,20 +356,17 @@ function displayData() {
                 cell2.innerHTML = total;
                 Totalrow.appendChild(cell2);
 
-                // Append the row to the table
                 summury.appendChild(Totalrow);
             });
         })
         .catch((err) => {
-            // Handle any errors
             console.log(err);
         });
-
-
-
 }
+
 // Add an event listener to the first dropdown to update the second dropdown when it changes
 firstDropdown.addEventListener('change', updateSecondDropdown);
+
 // Add event listener to form submit button
 form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -417,11 +374,18 @@ form.addEventListener('submit', (event) => {
     // Get form data
     var formData = new FormData(form);
     var date = formData.get('date');
-    var month = date.split("-")[1];
-    var year = date.split("-")[0];
     var amount = formData.get('amount');
     var type = formData.get('type');
     var description = formData.get('description');
+
+    // Validation: Check if all fields are filled
+    if (!date || !amount || !type || !description) {
+        alert("सर्व फील्ड्स भरावेत.");
+        return;
+    }
+
+    var month = date.split("-")[1];
+    var year = date.split("-")[0];
     var id = Date.now();
     var user = location.hash || "#" + prompt("enter your name");
 
@@ -461,46 +425,45 @@ form.addEventListener('submit', (event) => {
             alert("Entry Saved");
             document.getElementById("saveData").hidden = false;
             document.getElementById("ammount").value = "";
+            document.getElementById("date").value = "";
+            document.getElementById("ExpenseType").value = "";
+            document.getElementById("ExpenseOption").value = "";
         }
     }
 });
+
 /**
  * Deletes a transaction based on its ID.
  * @param {string} id - The ID of the transaction to delete.
  * @param {HTMLElement} element - The HTML element associated with the transaction.
  */
 function Delete(id, element) {
-    // Prompt user for confirmation
     var cnf = prompt("Type confirm to delete");
     if (cnf === "confirm") {
-        // Get user input (hash or prompt)
         var user = location.hash || "#" + prompt("enter your name");
         var req = {
             user: user,
             Deid: id
         };
 
-        // Convert request object to JSON string
         var json = JSON.stringify(req);
 
-        // Make an AJAX request to your server
         var xhr = new XMLHttpRequest();
         xhr.open('POST', url + '/Delete', true);
         xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
         xhr.send(json);
 
-        // Hide save button and reset form fields
         element.innerHTML = "Entry is being Deleted";
 
-        // Handle AJAX response
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
                 data = [];
                 alert("Entry Deleted");
-                displayData(); // Assuming you have a function to refresh the displayed data
+                displayData();
             }
         };
     }
 }
+
 // Initialize the second dropdown with the default options
 updateSecondDropdown();
