@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="mr">
-
 <head>
     <title>वैयक्तिक खातेवही</title>
     <script>
@@ -152,7 +151,6 @@
         gtag('config', 'G-4Z9B3ZFLP7');
     </script>
 </head>
-
 <body>
     <h1>वैयक्तिक खातेवही</h1>
     <div class="form-control">
@@ -244,11 +242,21 @@
             </tbody>
         </table>
         <h3>व्यवहार तपशील</h3>
-        <div id="entries"></div>
-        <div id='sunburst'></div>
-        <div id='Exp'></div>
-        <div id='Save'></div>
-        <div id='Income'></div>
+        <table id="entries" class="tablesorter">
+            <thead>
+                <tr>
+                    <th>क्रमांक</th>
+                    <th>दिनांक</th>
+                    <th>रक्कम</th>
+                    <th>प्रकार</th>
+                    <th>तपशील</th>
+                    <th>नोंदणी काढा</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Your dynamic data rows go here -->
+            </tbody>
+        </table>
     </div>
 
     <script type="text/javascript" src="./master.js"></script>
@@ -258,5 +266,4 @@
         });
     </script>
 </body>
-
 </html>
