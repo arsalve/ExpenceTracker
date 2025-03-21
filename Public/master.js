@@ -14,7 +14,6 @@ const catelog = document.getElementById("cate").innerHTML;
 // Get references to the two dropdown lists
 const firstDropdown = document.getElementById('ExpenseType');
 const secondDropdown = document.getElementById('ExpenseOption');
-
 function updateSecondDropdown() {
     secondDropdown.innerHTML = '';
     const selectedValue = firstDropdown.value;
