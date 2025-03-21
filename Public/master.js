@@ -14,6 +14,7 @@ const catelog = document.getElementById("cate").innerHTML;
 // Get references to the two dropdown lists
 const firstDropdown = document.getElementById('ExpenseType');
 const secondDropdown = document.getElementById('ExpenseOption');
+
 function updateSecondDropdown() {
     secondDropdown.innerHTML = '';
     const selectedValue = firstDropdown.value;
@@ -49,68 +50,10 @@ function sumArray(arr) {
     return sum;
 }
 
-function Ploy(xAxis, yAxis, parents) {
-    var data = [{
-        type: "pie",
-        values: yAxis[0],
-        labels: xAxis[0],
-        textinfo: "label+percent",
-        textposition: "inside",
-        insidetextorientation: "radial",
-        automargin: true,
-        title: 'खर्च',
-        marker: { colors: ['#ff7f0e', '#1f77b4', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'] }
-    }];
-    var data2 = [{
-        type: "pie",
-        values: yAxis[1],
-        labels: xAxis[1],
-        textinfo: "label+percent",
-        insidetextorientation: "radial",
-        textposition: "inside",
-        automargin: true,
-        title: 'बचत',
-        marker: { colors: ['#ff7f0e', '#1f77b4', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'] }
-    }];
-    var data3 = [{
-        type: "pie",
-        values: yAxis[2],
-        labels: xAxis[2],
-        textinfo: "label+percent",
-        textposition: "inside",
-        automargin: true,
-        title: 'उत्पन्न',
-        insidetextorientation: "radial",
-        marker: { colors: ['#ff7f0e', '#1f77b4', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'] }
-    }]
-
-    var layout = {
-        margin: {
-            autoexpand: false,
-            r: 10,
-            t: 10,
-            l: 10,
-            b: 10
-        },
-        autosize: true,
-        paper_bgcolor: "#272822",
-        plot_bgcolor: "#272822",
-        font: {
-            color: "#f8f8f2"
-        },
-        showlegend: true,
-        grid: {
-            rows: 1,
-            columns: 1
-        }
-    };
-
-    Plotly.newPlot('Exp', data, layout);
-    Plotly.newPlot('Save', data2, layout);
-    Plotly.newPlot('Income', data3, layout);
-}
-
 function displayData() {
+    document.getElementById("entries").innerHTML = tableog;
+    document.getElementById("summury").innerHTML = summuryog;
+    document.getElementById("cate").innerHTML = catelog;
     var allEntries = document.querySelector("#allEntries").checked;
     var today = new Date();
     if (document.querySelector("#selectMonth").value == '' && !allEntries)
@@ -160,13 +103,7 @@ function displayData() {
                 Income: {},
                 credit: {}
             };
-            var tableData = {
-                id: [],
-                date: [],
-                amount: [],
-                type: [],
-                description: []
-            };
+            var tableData = [];
 
             data.forEach((Entry) => {
                 var item = Entry.transaction;
@@ -177,11 +114,16 @@ function displayData() {
                 }
                 counters[type][element] = Number(counters[type][element] ? counters[type][element] + Number(item.amount) : Number(item.amount));
 
-                tableData.id.push(item.id);
-                tableData.date.push(item.date);
-                tableData.amount.push(item.amount);
-                tableData.type.push(item.type === "credit" ? "उत्पन्न" : item.type === "debit" ? "खर्च" : "बचत");
-                tableData.description.push(item.description);
+                tableData.push(`
+                    <tr>
+                        <td>${tableData.length + 1}</td>
+                        <td>${item.date}</td>
+                        <td>${item.amount}</td>
+                        <td>${item.type === "credit" ? "उत्पन्न" : item.type === "debit" ? "खर्च" : "बचत"}</td>
+                        <td>${item.description}</td>
+                        <td><button onClick="Delete('${item.id}', this)">Delete</button></td>
+                    </tr>
+                `);
 
                 if (item.type == "credit") {
                     total += Number(item.amount);
@@ -202,53 +144,36 @@ function displayData() {
             yAxis[2] = Object.values(counters.credit);
             xAxis[2] = Object.keys(counters.credit);
 
-            Plotly.newPlot('entries', [{
-                type: 'table',
-                header: {
-                    values: ["क्रमांक", "दिनांक", "रक्कम", "प्रकार", "तपशील"],
-                    align: "center",
-                    line: { width: 1, color: 'black' },
-                    fill: { color: "#49483e" },
-                    font: { family: "Arial", size: 12, color: "white" }
-                },
-                cells: {
-                    values: [tableData.id, tableData.date, tableData.amount, tableData.type, tableData.description],
-                    align: "center",
-                    line: { color: "black", width: 1 },
-                    fill: { color: ["#272822", "#3b3a32"] },
-                    font: { family: "Arial", size: 11, color: ["white"] }
-                }
-            }], {
-                paper_bgcolor: "#272822",
-                plot_bgcolor: "#272822"
-            });
+            document.getElementById("entries").innerHTML = `
+                <thead>
+                    <tr>
+                        <th>क्रमांक</th>
+                        <th>दिनांक</th>
+                        <th>रक्कम</th>
+                        <th>प्रकार</th>
+                        <th>तपशील</th>
+                        <th>नोंदणी काढा</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${tableData.join('')}
+                </tbody>
+            `;
 
-            Ploy(xAxis, yAxis, parent);
-
-            Plotly.newPlot('summury', [{
-                type: 'table',
-                header: {
-                    values: ["विवरण", "रक्कम"],
-                    align: "center",
-                    line: { width: 1, color: 'black' },
-                    fill: { color: "#49483e" },
-                    font: { family: "Arial", size: 12, color: "white" }
-                },
-                cells: {
-                    values: [
-                        ["एकूण  उत्पन्न", "एकूण खर्च", "एकूण बचत", "शिल्लक रक्कम"],
-                        [income, expence, savings, total]
-                    ],
-                    align: "center",
-                    line: { color: "black", width: 1 },
-                    fill: { color: ["#272822", "#3b3a32"] },
-                    font: { family: "Arial", size: 11, color: ["white"] }
-                }
-            }], {
-                paper_bgcolor: "#272822",
-                plot_bgcolor: "#272822"
-            });
-
+            document.getElementById("summury").innerHTML = `
+                <thead>
+                    <tr>
+                        <th>विवरण</th>
+                        <th>रक्कम</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>एकूण  उत्पन्न</td><td>${income}</td></tr>
+                    <tr><td>एकूण खर्च</td><td>${expence}</td></tr>
+                    <tr><td>एकूण बचत</td><td>${savings}</td></tr>
+                    <tr><td>शिल्लक रक्कम</td><td>${total}</td></tr>
+                </tbody>
+            `;
         })
         .catch((err) => {
             console.log(err);
@@ -262,12 +187,11 @@ firstDropdown.addEventListener('change', updateSecondDropdown);
 form.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    // Get form data
-    var formData = new FormData(form);
-    var date = formData.get('date');
-    var amount = formData.get('amount');
-    var type = formData.get('type');
-    var description = formData.get('description');
+    // Get form data using CSS selectors
+    var date = document.querySelector('#date').value;
+    var amount = document.querySelector('#ammount').value;
+    var type = document.querySelector('#ExpenseType').value;
+    var description = document.querySelector('#ExpenseOption').value;
 
     // Validation: Check if all fields are filled
     if (!date || !amount || !type || !description) {
@@ -315,10 +239,11 @@ form.addEventListener('submit', (event) => {
             data = [];
             alert("Entry Saved");
             document.getElementById("saveData").hidden = false;
-            document.getElementById("ammount").value = "";
-            document.getElementById("date").value = "";
-            document.getElementById("ExpenseType").value = "";
-            document.getElementById("ExpenseOption").value = "";
+            document.querySelector("#ammount").value = "";
+            document.querySelector("#date").value = "";
+            document.querySelector("#ExpenseType").value = "";
+            document.querySelector("#ExpenseOption").value = "";
+            displayData();
         }
     }
 });
