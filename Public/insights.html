@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="mr">
-
 <head>
     <meta charset="UTF-8">
     <title>Insights</title>
@@ -16,32 +15,65 @@
             url = "https://kharchapani.onrender.com";
         }
     </script>
- 
 </head>
-
 <body>
-    <a id="backLink" href="index.html">
-        <button id="backButton">Back to Home</button>
-    </a>
-    <h1>Insights</h1>
-    <div class="form-group">
-        <label for="date">Select Month and Year:</label>
-        <input type="month" id="date" class="form-control">
-        <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="allEntries">
-            <label class="form-check-label" for="allEntries">All Entries</label>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <a class="navbar-brand" href="index.html">वैयक्तिक खातेवही</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="insights.html">Insights</a>
+                </li>
+              
+            </ul>
         </div>
-        <button class="btn-primary" onclick="fetchInsights()">Get Insights</button>
+    </nav>
+    <div class="container mt-4">
+        <div class="form-group">
+            <label for="date">महिना व वर्ष निवडा:</label>
+            <input type="month" id="date" class="form-control">
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="allEntries">
+                <label class="form-check-label" for="allEntries">सर्व नोंदी</label>
+            </div>
+            <button class="btn btn-primary mt-2" onclick="fetchInsights()">Get Insights</button>
+        </div>
+        <div id="insights" class="insights-container">
+            <div class="insights-card">
+                <h3>Insights</h3>
+                <p id="totalIncome"><i class="fas fa-wallet"></i> एकूण उत्पन्न: </p>
+                <p id="totalExpenses"><i class="fas fa-money-bill-wave"></i> एकूण खर्च: </p>
+                <p id="totalSavings"><i class="fas fa-piggy-bank"></i> एकूण बचत: </p>
+                <p id="balance"><i class="fas fa-balance-scale"></i> शिल्लक रक्कम: </p>
+                <p id="expensePercentage">आपल्या एकूण उत्पन्नाचा % खर्च झाला आहे.</p>
+                <p id="savingsPercentage">आपल्या एकूण उत्पन्नाचा % बचत झाली आहे.</p>
+                <p id="balancePercentage">आपल्या एकूण उत्पन्नाचा % शिल्लक आहे.</p>
+            </div>
+            <div class="recommendations-card">
+                <h3>शिफारसी</h3>
+                <p>आपल्या आर्थिक अहवालाच्या आधारे, येथे काही शिफारसी आहेत:</p>
+                <ul id="recommendationsList">
+                    <!-- Recommendations will be dynamically added here -->
+                </ul>
+            </div>
+        </div>
+        <div id="charts" class="chart-grid">
+            <div id="expChart"></div>
+            <div id="saveChart"></div>
+            <div id="incomeChart"></div>
+        </div>
     </div>
-    <div id="insights"></div>
-    <div id="recommendations"></div>
-    <div id="charts" class="chart-grid">
-        <div id="expChart"></div>
-        <div id="saveChart"></div>
-        <div id="incomeChart"></div>
-    </div>
+    <footer class="bg-dark text-white text-center py-3 mt-4">
+        <p>&copy; 2023 Expense Tracker. All rights reserved.</p>
+    </footer>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script src="insights.js"></script>
     <script type="text/javascript" src="./persistHash.js"></script>
 </body>
-
 </html>

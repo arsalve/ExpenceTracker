@@ -4,8 +4,8 @@ body {
     height: 100%;
     margin: 0;
     padding: 2%;
-    background-color: #272822;
-    color: #f8f8f2;
+    background-color: #1e1e1e; /* Darker background */
+    color: #dcdcdc; /* Slightly lighter text for better contrast */
     font-family: 'Roboto', sans-serif;
 }
 
@@ -17,7 +17,7 @@ h5,
 h6 {
     padding: 2%;
     color: #f8f8f2;
-    text-shadow: 0 0 10px #66d9ef;
+    border-bottom: 2px solid #66d9ef; /* Add bottom border for emphasis */
 }
 
 .form-control {
@@ -25,18 +25,24 @@ h6 {
     border-color: #75715e;
     color: #f8f8f2;
     width: 100%;
-    height: 25%;
+    height: auto;
     transition: background-color 0.3s ease;
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: inset 0 0 5px #000; /* Inner shadow for depth */
 }
 
 .form-control:focus {
     background-color: #3b3a32;
+    color: #f8f8f2; /* Ensure text color remains readable */
+    box-shadow: 0 0 10px #66d9ef; /* Outer glow on focus */
 }
 
 .form-control2 {
     background-color: #272822;
     border-color: #75715e;
     color: #f8f8f2;
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: inset 0 0 5px #000; /* Inner shadow for depth */
 }
 
 .btn-primary,
@@ -47,6 +53,7 @@ h6 {
     color: #272822;
     transform: scale(1.1);
     transition: transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 0 10px #66d9ef; /* Add glow effect */
 }
 
 .btn-primary {
@@ -54,10 +61,12 @@ h6 {
     border-color: #66d9ef;
     color: #272822;
     transition: background-color 0.3s ease;
+    border-radius: 5px; /* Rounded corners */
 }
 
 .btn-primary:hover {
     background-color: #a1efe4;
+    box-shadow: 0 0 15px #a1efe4; /* Stronger glow on hover */
 }
 
 /* Add some style for the table */
@@ -68,25 +77,33 @@ table {
     background-color: #272822; /* Monokai background */
     color: #f8f8f2; /* Monokai foreground */
     box-shadow: 0 0 10px #66d9ef;
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden; /* Ensure rounded corners are visible */
 }
 
 th,
 td {
+    align-content:center;
+    text-align: center;
     border: 1px solid #75715e;
     padding: 10px;
+    border-radius: 5px; /* Rounded corners */
 }
 
 th {
     background-color: #49483e;
     color: #f8f8f2;
+    text-transform: uppercase; /* Uppercase text for headers */
 }
 
 tbody tr:nth-child(odd) {
     background-color: #3b3a32;
+    border-left: 5px solid #66d9ef; /* Add left border for emphasis */
 }
 
 tbody tr:nth-child(even) {
     background-color: #272822;
+    border-left: 5px solid #a1efe4; /* Add left border for emphasis */
 }
 
 /* Media queries */
@@ -150,12 +167,14 @@ tbody tr:nth-child(even) {
 .tablesorter-default {
     background-color: #272822 !important;
     color: #f8f8f2 !important;
+    border-radius: 10px; /* Rounded corners */
 }
 
 .tablesorter-default th,
 .tablesorter-default td {
     border: 1px solid #75715e !important;
     padding: 10px !important;
+    border-radius: 5px; /* Rounded corners */
 }
 
 .tablesorter-default th {
@@ -174,16 +193,19 @@ tbody tr:nth-child(even) {
 .tablesorter-default .tablesorter-header {
     background-color: #49483e !important;
     color: #f8f8f2 !important;
+    text-transform: uppercase; /* Uppercase text for headers */
 }
 
 .tablesorter-default .tablesorter-headerAsc {
     background-color: #66d9ef !important;
     color: #272822 !important;
+    box-shadow: 0 0 10px #66d9ef; /* Add glow effect */
 }
 
 .tablesorter-default .tablesorter-headerDesc {
     background-color: #f92672 !important;
     color: #272822 !important;
+    box-shadow: 0 0 10px #66d9ef; /* Add glow effect */
 }
 
 .tablesorter-default td {
@@ -201,8 +223,9 @@ tbody tr:nth-child(even) {
     border: none;
     padding: 10px 20px;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 5px; /* Rounded corners */
     transition: transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 0 10px #66d9ef; /* Add glow effect */
 }
 
 #insightsButton:hover,
@@ -216,4 +239,71 @@ tbody tr:nth-child(even) {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
     margin-top: 20px;
+    border-radius: 10px; /* Rounded corners */
+}
+
+/* Insights page styles */
+.insights-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px;
+    border-radius: 10px; /* Rounded corners */
+}
+
+.insights-card,
+.recommendations-card {
+    background-color: #49483e;
+    border: 1px solid #75715e;
+    color: #f8f8f2;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
+    width: 45%;
+    min-width: 300px;
+    box-shadow: 0 0 10px #66d9ef; /* Add glow effect */
+}
+
+.insights-card h3,
+.recommendations-card h3 {
+    text-shadow: none;
+}
+
+.insights-card p,
+.recommendations-card p,
+.recommendations-card ul {
+    margin: 10px 0;
+}
+
+.recommendations-card ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.recommendations-card ul li {
+    background-color: #3b3a32;
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border-left: 5px solid #66d9ef; /* Add left border for emphasis */
+}
+
+/* Navigation header and footer styles */
+.navbar {
+    margin-bottom: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 0 10px #66d9ef;
+    border-radius: 10px; /* Rounded corners */
+}
+
+footer {
+    background-color: #272822;
+    color: #f8f8f2;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    border-top: 2px solid #66d9ef; /* Add top border for emphasis */
 }

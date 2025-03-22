@@ -26,7 +26,6 @@ function fetchInsights() {
         }
     }
 
-
     fetch(url + "/find", {
             method: "POST",
             headers: {
@@ -69,17 +68,13 @@ function displayInsights(data) {
         }
     });
 
-    var insightsDiv = document.getElementById('insights');
-    insightsDiv.innerHTML = `
-        <h3>Insights</h3>
-        <p>एकूण उत्पन्न: ${totalIncome}</p>
-        <p>एकूण खर्च: ${totalExpenses}</p>
-        <p>एकूण बचत: ${totalSavings}</p>
-        <p>शिल्लक रक्कम: ${totalIncome - totalExpenses - totalSavings}</p>
-        <p>आपल्या एकूण उत्पन्नाचा ${((totalExpenses / totalIncome) * 100).toFixed(2)}% खर्च झाला आहे.</p>
-        <p>आपल्या एकूण उत्पन्नाचा ${((totalSavings / totalIncome) * 100).toFixed(2)}% बचत झाली आहे.</p>
-        <p>आपल्या एकूण उत्पन्नाचा ${(((totalIncome - totalExpenses - totalSavings) / totalIncome) * 100).toFixed(2)}% शिल्लक आहे.</p>
-    `;
+    document.getElementById('totalIncome').innerText = `एकूण उत्पन्न: ${totalIncome}`;
+    document.getElementById('totalExpenses').innerText = `एकूण खर्च: ${totalExpenses}`;
+    document.getElementById('totalSavings').innerText = `एकूण बचत: ${totalSavings}`;
+    document.getElementById('balance').innerText = `शिल्लक रक्कम: ${totalIncome - totalExpenses - totalSavings}`;
+    document.getElementById('expensePercentage').innerText = `आपल्या एकूण उत्पन्नाचा ${((totalExpenses / totalIncome) * 100).toFixed(2)}% खर्च झाला आहे.`;
+    document.getElementById('savingsPercentage').innerText = `आपल्या एकूण उत्पन्नाचा ${((totalSavings / totalIncome) * 100).toFixed(2)}% बचत झाली आहे.`;
+    document.getElementById('balancePercentage').innerText = `आपल्या एकूण उत्पन्नाचा ${(((totalIncome - totalExpenses - totalSavings) / totalIncome) * 100).toFixed(2)}% शिल्लक आहे.`;
 
     plotChart('expChart', 'खर्च', expenseCategories);
     plotChart('saveChart', 'बचत', savingsCategories);
@@ -143,15 +138,18 @@ function generateRecommendations(data) {
         }
     });
 
-    var recommendationsDiv = document.getElementById('recommendations');
-    recommendationsDiv.innerHTML = `
-        <h3>शिफारसी</h3>
-        <p>आपल्या आर्थिक अहवालाच्या आधारे, येथे काही शिफारसी आहेत:</p>
-        <ul>
-            ${totalExpenses / totalIncome > 0.5 ? '<li>आपला खर्च कमी करण्याचा प्रयत्न करा. आपला खर्च आपल्या उत्पन्नाच्या 50% पेक्षा कमी ठेवण्याचे लक्ष्य ठेवा.</li>' : ''}
-            ${totalSavings / totalIncome < 0.2 ? '<li>आपली बचत वाढवा. आपल्या उत्पन्नाच्या किमान 20% बचत करण्याचे लक्ष्य ठेवा.</li>' : ''}
-            ${totalIncome - totalExpenses - totalSavings < 0 ? '<li>आपण आपल्या उत्पन्नापेक्षा जास्त खर्च करत आहात. कर्ज टाळण्यासाठी आपला बजेट पुनरावलोकन करण्याचा विचार करा.</li>' : ''}
-            ${totalIncome - totalExpenses - totalSavings > 0 ? '<li>छान काम! आपल्याकडे सकारात्मक शिल्लक आहे. आपली संपत्ती वाढवण्यासाठी आपल्या शिल्लक रक्कम गुंतवण्याचा विचार करा.</li>' : ''}
-        </ul>
+    var recommendationsList = document.getElementById('recommendationsList');
+    recommendationsList.innerHTML = `
+        ${totalExpenses / totalIncome > 0.5 ? '<li>आपला खर्च कमी करण्याचा प्रयत्न करा. आपला खर्च आपल्या उत्पन्नाच्या 50% पेक्षा कमी ठेवण्याचे लक्ष्य ठेवा.</li>' : ''}
+        ${totalSavings / totalIncome < 0.2 ? '<li>आपली बचत वाढवा. आपल्या उत्पन्नाच्या किमान 20% बचत करण्याचे लक्ष्य ठेवा.</li>' : ''}
+        ${totalIncome - totalExpenses - totalSavings < 0 ? '<li>आपण आपल्या उत्पन्नापेक्षा जास्त खर्च करत आहात. कर्ज टाळण्यासाठी आपला बजेट पुनरावलोकन करण्याचा विचार करा.</li>' : ''}
+        ${totalIncome - totalExpenses - totalSavings > 0 ? '<li>छान काम! आपल्याकडे सकारात्मक शिल्लक आहे. आपली संपत्ती वाढवण्यासाठी आपल्या शिल्लक रक्कम गुंतवण्याचा विचार करा.</li>' : ''}
+        ${totalExpenses > 1000 ? '<li>आपला खर्च उच्च आहे. खर्च कमी करण्यासाठी अनावश्यक खरेदी टाळा.</li>' : ''}
+        ${totalIncome < 500 ? '<li>आपले उत्पन्न कमी आहे. उत्पन्न वाढवण्यासाठी नवीन संधी शोधा.</li>' : ''}
+        ${totalSavings > 1000 ? '<li>आपली बचत चांगली आहे. आपली बचत वाढवण्यासाठी गुंतवणूक पर्यायांचा विचार करा.</li>' : ''}
+        ${totalExpenses / totalIncome < 0.3 ? '<li>आपला खर्च कमी आहे. आपल्याकडे अधिक बचत करण्याची संधी आहे.</li>' : ''}
+        ${totalIncome > 2000 ? '<li>आपले उत्पन्न चांगले आहे. आपली संपत्ती वाढवण्यासाठी विविध गुंतवणूक पर्यायांचा विचार करा.</li>' : ''}
+        ${totalExpenses < 200 ? '<li>आपला खर्च खूप कमी आहे. आपल्याकडे अधिक खर्च करण्याची क्षमता आहे.</li>' : ''}
     `;
+    
 }

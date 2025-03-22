@@ -1,6 +1,5 @@
 // Define dropdown values
 var dropdownValues = {
-
     "Savings": ["म्युच्युअल फंड्स", "एफडी", "आरडी", "सोने", "पीपीएफ", "इतर गुंतवणूक"],
     "Income": ["पगार", "गुंतवणूक व परतावा", "इतर उत्पन्न", "मागील बाकी"],
     "Expence": ["आहार", "किराणा", "घरातील खर्च", "परिवहन", "मनोरंजन", "दूरसंचार", "आरोग्य", "वैयक्तिक काळजी", "विमा", "कपडे", "वाहन देखरेख", "इंधन", "रोकड", "वॉलेट ट्रान्स्फर", "इतर खर्च"]
@@ -23,7 +22,7 @@ function updateSecondDropdown() {
     // Clear the current options in the second dropdown
     secondDropdown.innerHTML = '';
 
-    // Get the selected value from the first dropdown
+    // Get the selected value from the firstDropdown
     const selectedValue = firstDropdown.value;
 
     // Define the options for the second dropdown based on the selected value
@@ -60,104 +59,7 @@ function sumArray(arr) {
     });
     return sum;
 }
-/** Creates graphs
- */
-function Ploy(xAxis, yAxis, parents) {
-    // var labels=((["खर्च","बचत","उत्पन्न"].concat(xAxis[0])).concat(xAxis[1])).concat(xAxis[2])
-    // var sum1=Math.abs((-sumArray(yAxis[0]))-sumArray(yAxis[1])+sumArray(yAxis[2]));
-    // var Debit1=sumArray(yAxis[0]);
-    // var Saving1=sumArray(yAxis[1]);
-    // var Income1=sumArray(yAxis[2]);
-    // var value=(([Debit1,Saving1,Income1]).concat(yAxis[0])).concat(yAxis[1])).concat(yAxis[2]);
-    // var parent=((["",""].concat(parents[0])).concat(parents[1])).concat(parents[2]);
-    // var dataS = [{
-    //     type: "sunburst",
-    //     labels: labels,
-    //     parents: parent,
-    //     values:  value,
-    //     outsidetextfont: {size: 20, color: "#377eb8"},
-    //     leaf: {opacity: 0.4},
-    //     marker: {line: {width: 2}},
-    //   }];
 
-    //   var layoutS = {
-    //     margin: {l: 0, r: 0, b: 0, t: 0},
-    //     width: 500,
-    //     height: 500
-    //   };
-
-
-    //   Plotly.newPlot('sunburst', dataS, layoutS);
-
-
-    //
-
-    var data = [{
-        type: "pie",
-        values: yAxis[0],
-        labels: xAxis[0],
-        textinfo: "label+percent",
-        textposition: "inside",
-        insidetextorientation: "radial",
-        automargin: true,
-        title: 'खर्च'
-
-    }];
-    var data2 = [{
-        type: "pie",
-        values: yAxis[1],
-        labels: xAxis[1],
-        textinfo: "label+percent",
-        insidetextorientation: "radial",
-        textposition: "inside",
-        automargin: true,
-        title: 'बचत'
-
-    }];
-    var data3 = [{
-        type: "pie",
-        values: yAxis[2],
-        labels: xAxis[2],
-        textinfo: "label+percent",
-        textposition: "inside",
-        automargin: true,
-        title: 'उत्पन्न',
-        insidetextorientation: "radial"
-    }]
-
-    var layout = {
-        margin: {
-            autoexpand: false,
-            r: 10,
-            t: 10,
-            l: 10,
-            b: 10
-        },
-        autosize: true,
-        paper_bgcolor: "#272822", // Monokai background
-        plot_bgcolor: "#272822", // Monokai background
-        font: {
-            color: "#f8f8f2" // Monokai foreground
-        },
-        showlegend: true,
-        grid: {
-            rows: 1,
-            columns: 1
-        }
-    };
-
-
-
-    Plotly.newPlot('Exp', data, layout);
-    Plotly.newPlot('Save', data2, layout);
-    Plotly.newPlot('Income', data3, layout);
-
-
-}
-
-/**
- * Get the table element from HTML
- */
 function displayData() {
     document.getElementById("entries").innerHTML = tableog;
     document.getElementById("summury").innerHTML = summuryog;
@@ -344,7 +246,6 @@ function displayData() {
 
                     }
                 }
-                Ploy(xAxis, yAxis, parent);
                 var IncomeRow = document.createElement("tr");
 
                 // Create and append cells for each column
@@ -408,13 +309,8 @@ function displayData() {
             // Handle any errors
             console.log(err);
         });
-
-
-
 }
-// Add an event listener to the first dropdown to update the second dropdown when it changes
-firstDropdown.addEventListener('change', updateSecondDropdown);
-// Add event listener to form submit button
+
 // Add an event listener to the first dropdown to update the second dropdown when it changes
 firstDropdown.addEventListener('change', updateSecondDropdown);
 // Add event listener to form submit button
