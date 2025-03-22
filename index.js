@@ -65,7 +65,7 @@ try {
     //Following Endpoint sends an entry page for user
     app.get('/*', (req, res) => {
         try {
-            fs.readFile(__dirname + '\\index.html', 'utf8', function (err, text) {
+            fs.readFile(__dirname + './public/index.html', 'utf8', function (err, text) {
                 res.send(text);
             });
         } catch (error) {
