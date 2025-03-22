@@ -23,7 +23,7 @@ try {
         extended: true
     }));
     app.use(cors());
-    app.use(express.static(path.join(__dirname, './public')));
+    app.use(express.static(path.join(__dirname, './Public')));
     app.use(bodyParser.json({
         limit: '50mb'
     }))
@@ -53,7 +53,7 @@ try {
     });
     // Serve insights.html
     app.get('/insights', (req, res) => {
-        res.sendFile(path.join(__dirname, './public/insights.html'));
+        res.sendFile(path.join(__dirname, './Public/insights.html'));
     });
     app.get('/find', (req, res) => {
         req.manuser = '#' + req.query.user;
@@ -65,7 +65,7 @@ try {
     //Following Endpoint sends an entry page for user
     app.get('/*', (req, res) => {
         try {
-            fs.readFile(__dirname + './public/index.html', 'utf8', function (err, text) {
+            fs.readFile(__dirname + './Public/index.html', 'utf8', function (err, text) {
                 res.send(text);
             });
         } catch (error) {
