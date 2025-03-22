@@ -3,10 +3,10 @@ const cors = require('cors');
 const app = express();
 const path = require('path');
 const bodyParser = require("body-parser");
-const port = process.env.PORT||8080;
-const catchHandler = require('./CustomPackages/catchHandler.js');
-const DataManupulation = require('./CustomPackages/DataManupulation.js');
-const Downloads = require('./CustomPackages/Downloads.js');
+const port = process.env.PORT || 8080;
+const catchHandler = require('./utils/catchHandler.js');
+const DataManupulation = require('./controllers/DataManupulation.js');
+const Downloads = require('./controllers/Downloads.js');
 
 const {
     exception
@@ -23,7 +23,7 @@ try {
         extended: true
     }));
     app.use(cors());
-    app.use(express.static(path.join(__dirname, './Public')));
+    app.use(express.static(path.join(__dirname, './public')));
     app.use(bodyParser.json({
         limit: '50mb'
     }))
@@ -50,9 +50,13 @@ try {
             res.send(responce);
         });
 
-    }); 
+    });
+    // Serve insights.html
+    app.get('/insights', (req, res) => {
+        res.sendFile(path.join(__dirname, './public/insights.html'));
+    });
     app.get('/find', (req, res) => {
-        req.manuser='#'+req.query.user;
+        req.manuser = '#' + req.query.user;
         var responce = DataManupulation.FindObj(req, (responce) => {
             res.send(responce);
         });

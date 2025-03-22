@@ -9,10 +9,10 @@
   "author": "Ashish Salve",
   "license": "ISC",
   "dependencies": {
-    
     "cheerio": "^1.0.0-rc.12",
-    "colors": "^1.4.0",  
+    "colors": "^1.4.0",
     "cors": "^2.8.5",
+    "ExpenceTracker": "file:",
     "express": "^4.21.2",
     "mongodb": "^4.10.0",
     "mongoose": "^6.6.5",

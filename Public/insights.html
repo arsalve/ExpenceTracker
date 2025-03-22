@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="mr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Insights</title>
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src='https://cdn.plot.ly/plotly-2.26.0.min.js'></script>
+    <script>
+        var url = '';
+        if (window.location.href.includes("localhost:8080")) {
+            url = "http://localhost:8080";
+        } else {
+            url = "https://kharchapani.onrender.com";
+        }
+    </script>
+ 
+</head>
+
+<body>
+    <a id="backLink" href="index.html">
+        <button id="backButton">Back to Home</button>
+    </a>
+    <h1>Insights</h1>
+    <div class="form-group">
+        <label for="date">Select Month and Year:</label>
+        <input type="month" id="date" class="form-control">
+        <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="allEntries">
+            <label class="form-check-label" for="allEntries">All Entries</label>
+        </div>
+        <button class="btn-primary" onclick="fetchInsights()">Get Insights</button>
+    </div>
+    <div id="insights"></div>
+    <div id="recommendations"></div>
+    <div id="charts" class="chart-grid">
+        <div id="expChart"></div>
+        <div id="saveChart"></div>
+        <div id="incomeChart"></div>
+    </div>
+    <script src="insights.js"></script>
+    <script type="text/javascript" src="./persistHash.js"></script>
+</body>
+
+</html>

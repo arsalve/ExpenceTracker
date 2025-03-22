@@ -14,152 +14,11 @@
 
     <!-- Bootstrap CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
     <script src='https://cdn.plot.ly/plotly-2.26.0.min.js'></script>
-    <!-- Monokai dark theme -->
-    <style>
-        html,
-        body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 2%;
-            background-color: #272822;
-            color: #f8f8f2;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            padding: 2%;
-            color: #f8f8f2;
-        }
-
-        .form-control {
-            background-color: #49483e;
-            border-color: #75715e;
-            color: #f8f8f2;
-            width: 100%;
-            height: 25%;
-        }
-
-        .form-control2 {
-            background-color: #272822;
-            border-color: #75715e;
-            color: #f8f8f2;
-        }
-
-        .btn-primary {
-            background-color: #66d9ef;
-            border-color: #66d9ef;
-            color: #272822;
-        }
-
-        /* Add some style for the table */
-        table {
-            border-collapse: collapse;
-            width: 95%;
-            margin: 20px;
-            background-color: #272822;
-            /* Monokai background */
-            color: #f8f8f2;
-            /* Monokai foreground */
-        }
-
-        th,
-        td {
-            border: 1px solid #75715e;
-            padding: 10px;
-        }
-
-        th {
-            background-color: #49483e;
-            color: #f8f8f2;
-        }
-
-        tbody tr:nth-child(odd) {
-            background-color: #3b3a32;
-        }
-
-        tbody tr:nth-child(even) {
-            background-color: #272822;
-        }
-
-        /* Media queries */
-        @media only screen and (max-width: 768px) {
-            .form-control {
-                height: 25%;
-                font-size: 14px;
-                padding-top: 5px;
-                padding-bottom: 5px;
-                margin-bottom: 10px;
-            }
-
-            table {
-                width: 100%;
-                margin-left: auto;
-                margin-right: auto;
-                font-size: 14px;
-            }
-
-            th,
-            td {
-                padding-top: 5px;
-                padding-bottom: 5px;
-                font-size: 14px;
-            }
-        }
-
-        /* Monokai dark theme for tablesorter */
-        .tablesorter-default {
-            background-color: #272822 !important;
-            color: #f8f8f2 !important;
-        }
-
-        .tablesorter-default th,
-        .tablesorter-default td {
-            border: 1px solid #75715e !important;
-            padding: 10px !important;
-        }
-
-        .tablesorter-default th {
-            background-color: #49483e !important;
-            color: #f8f8f2 !important;
-        }
-
-        .tablesorter-default tbody tr:nth-child(odd) {
-            background-color: #3b3a32 !important;
-        }
-
-        .tablesorter-default tbody tr:nth-child(even) {
-            background-color: #272822 !important;
-        }
-
-        .tablesorter-default .tablesorter-header {
-            background-color: #49483e !important;
-            color: #f8f8f2 !important;
-        }
-
-        .tablesorter-default .tablesorter-headerAsc {
-            background-color: #66d9ef !important;
-            color: #272822 !important;
-        }
-
-        .tablesorter-default .tablesorter-headerDesc {
-            background-color: #f92672 !important;
-            color: #272822 !important;
-        }
-
-        .tablesorter-default td {
-            background-color: #312f2f;
-        }
-    </style>
     <!-- Include jQuery and tablesorter -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    </script>
-     <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Z9B3ZFLP7"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Z9B3ZFLP7"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -169,13 +28,15 @@
         gtag('js', new Date());
         gtag('config', 'G-4Z9B3ZFLP7');
     </script>
-
 </head>
 
 <body>
+    <a id="insightsLink" href="insights.html">
+        <button id="insightsButton">See Insights</button>
+    </a>
     <h1>वैयक्तिक खातेवही</h1>
     <div class="form-control">
-        <form class="form-group" class="form-group" action="" method="post">
+        <form class="form-group" action="" method="post">
             <table>
                 <tr>
                     <th class="form-control2">दिनांक</th>
@@ -221,7 +82,7 @@
     <div id=displaydata>
         <!-- Add another table element to display the entries -->
         <div class="form-control2">
-            <form class="form-group" class="form-group">
+            <form class="form-group">
                 <table>
                     <tr>
                         <th>दिनांक</th>
@@ -313,7 +174,7 @@
     </div><!-- Plotly chart will be drawn inside this DIV -->
 
     <script type="text/javascript" src="./master.js"></script>
-   
+    <script type="text/javascript" src="./persistHash.js"></script>
 </body>
 
 </html>
