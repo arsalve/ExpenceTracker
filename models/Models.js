@@ -39,11 +39,19 @@ const Use = mongoose.Schema({
     }
     
 },{ strict: false });
+const FixedEntrySchema = mongoose.Schema({
+    user: { type: String, required: true },
+    type: { type: String, required: true }, // 'debit', 'credit', 'Savings'
+    description: { type: String, required: true },
+    amount: { type: Number, required: true }
+}, { strict: false });
+
 const Acount = mongoose.model('Account', Acc)
 const user = mongoose.model('AccountDAta', Use)
+const FixedEntry = mongoose.model('FixedEntry', FixedEntrySchema);
 
 module.exports = {
     'Acount': Acount,
-    'user': user
-
+    'user': user,
+    'FixedEntry': FixedEntry
 };

@@ -6,7 +6,46 @@ const catchHandler = require('../utils/catchHandler.js');
 mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
+}).catch(err => {
+    catchHandler("MongoDB Connection", err, "Error");
 });
+
+async function ensureFixedEntriesForMonth(user, month, year) {
+    try {
+        const exists = await Model.user.aggregate([
+            { $match: { user } },
+            { $unwind: "$transaction" },
+            { $match: { "transaction.month": String(month), "transaction.year": String(year) } }
+        ]);
+        if (exists.length === 0) {
+            const fixedEntries = await Model.FixedEntry.find({ user });
+            if (fixedEntries.length > 0) {
+                for (const entry of fixedEntries) {
+                    const transaction = {
+                        date: `${year}-${month}-01`,
+                        month: Number(month),
+                        year: Number(year),
+                        amount: entry.amount,
+                        type: entry.type,
+                        description: entry.description,
+                        id: Date.now() + Math.random().toString(36).slice(2)
+                    };
+                    try {
+                        await Model.user.updateOne(
+                            { user },
+                            { $addToSet: { transaction } },
+                            { upsert: true }
+                        );
+                    } catch (err) {
+                        catchHandler("ensureFixedEntriesForMonth - updateOne", err, "Error");
+                    }
+                }
+            }
+        }
+    } catch (err) {
+        catchHandler("ensureFixedEntriesForMonth", err, "Error");
+    }
+}
 
 /**
  * Finds an object in the MongoDB database based on the specified criteria.
@@ -26,22 +65,40 @@ async function FindObj(req, cb) {
     var result = [];
     try {
         if ((req.query.month || req.body.month) && (req.query.year || req.body.year)) {
+            const month = req.query.month || req.body.month;
+            const year = req.query.year || req.body.year;
+            const userStr = String(req.manuser || req.body.user);
+            try {
+                await ensureFixedEntriesForMonth(userStr, month, year);
+            } catch (err) {
+                catchHandler("FindObj - ensureFixedEntriesForMonth", err, "Error");
+            }
             var match = {
                 $match: {
                     "transaction.month": String(req.query.month || req.body.month),
                     "transaction.year": String(req.query.year || req.body.year)
                 }
             }
-            result = await Model.user.aggregate([query, unwind, match]);
+            try {
+                result = await Model.user.aggregate([query, unwind, match]);
+            } catch (err) {
+                catchHandler("FindObj - aggregate with match", err, "Error");
+                return cb("Error");
+            }
         } else {
-            result = await Model.user.aggregate([query, unwind]);
+            try {
+                result = await Model.user.aggregate([query, unwind]);
+            } catch (err) {
+                catchHandler("FindObj - aggregate", err, "Error");
+                return cb("Error");
+            }
         }
         if (result.length > 0)
             return cb(result);
         else
             return cb("object not Found");
     } catch (err) {
-        catchHandler("While Finding data in the DB", err, "ErrorC");
+        catchHandler("FindObj", err, "Error");
         return cb("Error")
     }
 }
@@ -53,7 +110,6 @@ async function FindObj(req, cb) {
  * @returns responce
  */
 async function objectAvilable(req, cb) {
-    var re = 0
     var query = {
         user: req.body.user
     };
@@ -64,7 +120,7 @@ async function objectAvilable(req, cb) {
         else
             return cb("object not Found");
     } catch (err) {
-        catchHandler("While Finding data in the DB", err, "ErrorC");
+        catchHandler("objectAvilable", err, "Error");
         return cb("Error")
     }
 }
@@ -87,17 +143,23 @@ async function Insert(req, resp) {
                     }
                 }).then(() => {
                     FindObj(req, resp);
+                }).catch(err => {
+                    catchHandler("Insert - updateOne", err, "Error");
+                    resp("Error");
                 });
             } else {
                 var obj = new Model.user(req.body);
                 Model.user.create(obj).then(() => {
                     FindObj(req, resp);
+                }).catch(err => {
+                    catchHandler("Insert - create", err, "Error");
+                    resp("Error");
                 });
             }
         })
     } catch (err) {
-        catchHandler("While conecting the DB", err, "ErrorC");
-        return err;
+        catchHandler("Insert", err, "Error");
+        return resp("Error");
     }
 }
 
@@ -113,24 +175,36 @@ async function delEntry(req, resp) {
             user: obj.user
         };
 
-        // Find the user
-        const user = await Model.user.findOne(query);
-
-        if (!user) {
-            // User not found
-            return resp.status(404).json({ error: 'User not found' });
+        let user;
+        try {
+            user = await Model.user.findOne(query);
+        } catch (err) {
+            catchHandler("delEntry - findOne", err, "Error");
+            return resp({ error: 'Internal server error' });
         }
 
-        // Remove the transaction with the specified ID
-        user.transaction = user.transaction.filter(t => t.id != obj.Deid);
-        await user.save();
+        if (!user) {
+            catchHandler("delEntry", "User not found", "Warning");
+            return resp({ error: 'User not found' });
+        }
 
-        // Transaction deleted successfully
-        FindObj(req, resp);
+        try {
+            user.transaction = user.transaction.filter(t => t.id != obj.Deid);
+            await user.save();
+        } catch (err) {
+            catchHandler("delEntry - save", err, "Error");
+            return resp({ error: 'Internal server error' });
+        }
+
+        try {
+            FindObj(req, resp);
+        } catch (err) {
+            catchHandler("delEntry - FindObj", err, "Error");
+            return resp({ error: 'Internal server error' });
+        }
     } catch (error) {
-        console.error('Error deleting transaction:', error.message);
-        // Handle the error (e.g., send an error response)
-        resp.status(500).json({ error: 'Internal server error' });
+        catchHandler("delEntry", error, "Error");
+        resp({ error: 'Internal server error' });
     }
 }
 

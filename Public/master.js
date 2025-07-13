@@ -66,6 +66,7 @@ function displayData() {
     document.getElementById("cate").innerHTML = catelog;
     var allEntries = document.querySelector("#allEntries").checked;
     var table = document.getElementById("entries");
+    var tbody = table.getElementsByTagName('tbody')[0]; // <-- Add this line to define tbody
     var summury = document.getElementById("summury");
     var cate = document.getElementById("cate");
     var today = new Date()
@@ -177,18 +178,25 @@ function displayData() {
                     cell4.innerHTML = item.description;
                     row.appendChild(cell4);
                     var cell5 = document.createElement("td");
-                    const button = document.createElement("button");
-                    button.innerText = "नोंदणी काढा";
-                    button.className="btn-primary text-center"
-                    button.onclick = function () {
-                        Delete(Entry.transaction.id, this)
+                    const deleteMode = document.getElementById('deleteMode') && document.getElementById('deleteMode').checked;
+                    if (deleteMode) {
+                        const button = document.createElement("button");
+                        button.innerText = "नोंदणी काढा";
+                        button.className = "btn-action-small text-center delete-entry-btn";
+                        button.onclick = function () {
+                            Delete(Entry.transaction.id, this)
+                        }
+                        cell5.appendChild(button);
+                        cell5.style.display = '';
+                    } else {
+                        cell5.style.display = 'none';
                     }
-                    cell5.appendChild(button);
-
                     row.appendChild(cell5);
 
-                    // Append the row to the table
-                    table.appendChild(row);
+                    // Append the row to the table body (not the table directly)
+                    if (tbody) {
+                        tbody.appendChild(row);
+                    }
                     if (item.type == "credit") {
                         total = total + Number(item.amount);
                         income = income + Number(item.amount);
@@ -405,5 +413,23 @@ function Delete(id, element) {
         };
     }
 }
+// Add this function to control delete buttons visibility
+function toggleDeleteButtons() {
+    const deleteMode = document.getElementById('deleteMode').checked;
+    document.querySelectorAll('.delete-entry-btn').forEach(btn => {
+        btn.style.display = deleteMode ? 'inline-block' : 'none';
+    });
+}
+
+// Add event listener for delete mode checkbox
+document.addEventListener('DOMContentLoaded', function () {
+    const deleteModeCheckbox = document.getElementById('deleteMode');
+    if (deleteModeCheckbox) {
+        deleteModeCheckbox.addEventListener('change', function () {
+            displayData();
+        });
+    }
+});
+
 // Initialize the second dropdown with the default options
 updateSecondDropdown();
