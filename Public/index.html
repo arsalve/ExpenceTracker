@@ -32,151 +32,116 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <a class="navbar-brand" href="index.html">वैयक्तिक खातेवही</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="insights.html">Insights</a>
+            <ul class="navbar-nav ml-auto align-items-center">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="insights.html">Insights</a></li>
+                <li class="nav-item"><a class="nav-link" href="fixed.html">Fixed Monthly</a></li>
+                <li class="nav-item d-flex align-items-center ml-3">
+                    <i class="fas fa-palette mr-1" style="color:#66d9ef;font-size:1.2em;"></i>
+                    <select id="themeSelect" class="form-control form-control-sm"
+                        style="width:auto;min-width:120px;background:#23272b;color:#66d9ef;border:1.5px;padding-top: 0px;padding-bottom: 0px; solid #66d9ef;">
+                        <option value="auto">Auto (Weather/Season)</option>
+                        <option value="theme-dark">Dark</option>
+                        <option value="theme-light">Light</option>
+                        <option value="theme-monsoon">Monsoon</option>
+                        <option value="theme-summer">Summer</option>
+                        <option value="theme-winter">Winter</option>
+                    </select>
                 </li>
             </ul>
         </div>
     </nav>
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card mb-4 bg-dark text-white form-control">
-                    <h5 class="card-title">नोंद करा</h5>
-                    <form class="form-group" action="" method="post">
-                        <table>
-                            <tr>
-                                <th class="form-control2">दिनांक</th>
-                                <th class="form-control2">रक्कम</th>
-                                <th class="form-control2">प्रकार </th>
-                                <th class="form-control2">तपशील</th>
-                            </tr>
-                            <tr class="input-field-container">
-                                <td><input type="date" class="form-control selectWidth" name="date" id="date" placeholder="DD/MM/YYYY" required></td>
-                                <td><input id="ammount" class="form-control selectWidth" type="number" name="amount" placeholder="रक्कम" required></td>
-                                <td><select name="type" class="form-control selectWidth" id="ExpenseType">
-                                        <option value="credit">उत्पन्न</option>
-                                        <option value="debit">खर्च</option>
-                                        <option value="Savings">बचत </option>
-                                    </select></td>
-                                <td>
-                                    <select name="description" type="text" class="form-control selectWidth" id="ExpenseOption"
-                                        list="options" name="ExpenseOption">
-                                        <data-list class="dropdown-menu" id="options">
-                                            <option class="dropdown-item" value="Salary">Salary</option>
-                                            <option class="dropdown-item" value="Income Other">Income Other</option>
-                                            <option class="dropdown-item" value="intrest">intrest</option>
-                                            <option class="dropdown-item" value="Savings - MF">Savings - MF</option>
-                                            <option class="dropdown-item" value="Savings - Bank">Savings - Bank</option>
-                                            <option class="dropdown-item" value="Savings - Other">Savings - Other</option>
-                                            <option class="dropdown-item" value="Food">Food</option>
-                                            <option class="dropdown-item" value="Fuel">Fuel</option>
-                                            <option class="dropdown-item" value="Vehicle Maintenance">Vehicle Maintenance</option>
-                                            <option class="dropdown-item" value="Cash">Cash</option>
-                                            <option class="dropdown-item" value="Exp Other">Exp Other</option>
-                                        </data-list>
-                                </td></select>
-                            </tr>
-                            <tr>
-                                <td colspan="4"><input id="saveData" class="btn-primary text-center" type="submit" value="नोंद करा">
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
-                </div>
-            </div>
-
-            <div class="col-md-12">
-                <div class="card mb-4 bg-dark text-white">
-                        <h5 class="card-title">शोधा</h5>
-                        <form class="form-group">
-                            <table>
-                                <tr>
-                                    <th>दिनांक</th>
-                                    <th>
-                                        <div class="form-group">
-                                            <label for="selectDate">महिना व वर्ष निवडा</label>
-                                            <input type="Month" id="selectMonth" class="form-control selectWidth" required>
-                                        </div>
-                                    </th>
-                                    <th colspan="3">
-                                        <input type="checkbox" id="allEntries" name="allEntries" value="allEntries">
-                                        <label for="allEntries"> सर्व नोंदी</label><br>
-                                    <td><br>&nbsp&nbsp&nbsp&nbsp<input class="btn-primary text-center" onclick="displayData()"value ="शोधा"><i class="fas fa-search" ></i></button></td>
-                                    </th>
-                                </tr>
-                            </table>
-                        </form>
-                </div>
-            </div>
+        <div class="card">
+            <h2>नोंद करा</h2>
+            <form class="form-group" action="" method="post">
+                <label for="date" class="form-label">दिनांक</label>
+                <input type="date" class="form-control" name="date" id="date" required placeholder="YYYY-MM-DD">
+                <label for="ammount" class="form-label">रक्कम</label>
+                <input id="ammount" class="form-control" type="number" name="amount" placeholder="रक्कम" required>
+                <label for="ExpenseType" class="form-label">प्रकार</label>
+                <select name="type" class="form-control custom-dropdown" id="ExpenseType">
+                    <option value="credit">उत्पन्न</option>
+                    <option value="debit">खर्च</option>
+                    <option value="Savings">बचत </option>
+                </select>
+                <label for="ExpenseOption" class="form-label">तपशील</label>
+                <select name="description" class="form-control custom-dropdown" id="ExpenseOption" list="options">
+                    <option value="Salary">Salary</option>
+                    <option value="Income Other">Income Other</option>
+                    <option value="intrest">intrest</option>
+                    <option value="Savings - MF">Savings - MF</option>
+                    <option value="Savings - Bank">Savings - Bank</option>
+                    <option value="Savings - Other">Savings - Other</option>
+                    <option value="Food">Food</option>
+                    <option value="Fuel">Fuel</option>
+                    <option value="Vehicle Maintenance">Vehicle Maintenance</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Exp Other">Exp Other</option>
+                </select>
+                <input id="saveData" class="btn-primary" type="submit" value="नोंद करा">
+            </form>
         </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card mb-4 bg-dark text-white">
-                    <div class="card-body">
-                        <h5 class="card-title">खात्या चा तपशील</h5>
-                        <table id="summury" class="tablesorter tablesorter-default">
-                            <thead>
-                                <tr>
-                                    <th>प्रकार</th>
-                                    <th>रक्कम</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Your dynamic data rows go here -->
-                            </tbody>
-                        </table>
-                    </div>
+        <div class="card">
+            <h2>शोधा</h2>
+            <form class="form-group">
+                <input type="month" id="selectMonth" class="form-control" required>
+                <div class="form-check my-2">
+                    <input type="checkbox" id="allEntries" class="form-check-input" name="allEntries" value="allEntries">
+                    <label for="allEntries" class="form-check-label"> सर्व नोंदी</label>
                 </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="card mb-4 bg-dark text-white">
-                    <div class="card-body">
-                        <h5 class="card-title">खात्या चा वर्गवार तपशील</h5>
-                        <table id="cate" class="tablesorter tablesorter-default">
-                            <thead>
-                                <tr>
-                                    <th>प्रकार</th>
-                                    <th>रक्कम</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Your dynamic data rows go here -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+                <input class="btn-primary" onclick="displayData()" value="शोधा" type="button">
+            </form>
         </div>
-
-        <div class="card mb-4 bg-dark text-white">
-            <div class="card-body">
-                <h5 class="card-title">व्यवहार तपशील</h5>
-                <table id="entries" class="tablesorter tablesorter-default">
-                    <thead>
-                        <tr>
-                            <th>क्रमांक </th>
-                            <th>दिनांक</th>
-                            <th>रक्कम</th>
-                            <th>प्रकार </th>
-                            <th>तपशील</th>
-                            <th>नोंदणी काढा</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Your dynamic data rows go here -->
-                    </tbody>
-                </table>
+        <div class="card">
+            <h2>खात्या चा तपशील</h2>
+            <table id="summury">
+                <thead>
+                    <tr>
+                        <th>प्रकार</th>
+                        <th>रक्कम</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="card">
+            <h2>खात्या चा वर्गवार तपशील</h2>
+            <table id="cate">
+                <thead>
+                    <tr>
+                        <th>प्रकार</th>
+                        <th>रक्कम</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="card">
+            <h2>व्यवहार तपशील</h2>
+            <table id="entries">
+                <thead>
+                    <tr>
+                        <th>क्रमांक</th>
+                        <th>दिनांक</th>
+                        <th>रक्कम</th>
+                        <th>प्रकार</th>
+                        <th>तपशील</th>
+                        <th id="deleteColHeader" style="display:none;">
+                            <span style="font-size:0.9em;">नोंदणी काढा</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div class="form-check my-2">
+                <input type="checkbox" id="deleteMode" class="form-check-input" name="deleteMode" value="deleteMode">
+                <label for="deleteMode" class="form-check-label">Delete Mode</label>
             </div>
         </div>
     </div>
