@@ -1,133 +1,162 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const app = express();
+const helmet = require('helmet');
 const path = require('path');
-const bodyParser = require("body-parser");
-const port = process.env.PORT || 8080;
-const catchHandler = require('./utils/catchHandler.js');
-const DataManupulation = require('./controllers/DataManupulation.js');
-const Downloads = require('./controllers/Downloads.js');
-const Model = require('./models/Models.js');
+const bodyParser = require('body-parser');
 
-const {
-    exception
-} = require('console');
-let fs = require('fs');
-const {
-    format
-} = require('path');
+// Initialize app
+const app = express();
+const port = process.env.PORT || 3000;
 
-app.use('/static', express.static('./static'));
-try {
+// Import database connection
+const connectDB = require('./config/database');
 
-    app.use(bodyParser.urlencoded({
-        extended: true
-    }));
-    app.use(cors());
-    app.use(express.static(path.join(__dirname, './Public')));
-    app.use(bodyParser.json({
-        limit: '50mb'
-    }))
-    //defining port to listen
-    app.listen(port, () => {
-        catchHandler('Ignition', 'ready for targates', "sucess");
-    }).on('error', (err) => {
-        catchHandler('Server Listen', err, "Error");
+// Import backward compatibility utilities
+const { autoMigrateOnStartup } = require('./utils/backwardCompatibility');
+
+// Import routes
+const apiRoutes = require('./routes/api');
+
+// Middleware
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: [
+                "'self'",
+                "'unsafe-inline'",
+                "'unsafe-eval'",
+                "https://cdn.tailwindcss.com",
+                "https://cdn.plot.ly",
+                "https://code.jquery.com",
+                "https://www.googletagmanager.com",
+                "https://kit.fontawesome.com",
+                "https://cdnjs.cloudflare.com"
+            ],
+            styleSrc: [
+                "'self'",
+                "'unsafe-inline'",
+                "https://cdn.tailwindcss.com",
+                "https://cdnjs.cloudflare.com",
+                "https://fonts.googleapis.com"
+            ],
+            imgSrc: [
+                "'self'",
+                "data:",
+                "blob:",
+                "https://images.unsplash.com"
+            ],
+            connectSrc: [
+                "'self'",
+                "http://localhost:8080",
+                "ws:",
+                "wss:"
+            ],
+            fontSrc: [
+                "'self'",
+                "data:",
+                "https://cdnjs.cloudflare.com",
+                "https://fonts.gstatic.com",
+                "https://kit.fontawesome.com"
+            ],
+            objectSrc: ["'none'"],
+            baseUri: ["'self'"],
+            formAction: ["'self'"],
+            frameAncestors: ["'none'"],
+            upgradeInsecureRequests: []
+        }
+    }
+}));
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
+app.use(bodyParser.json({ limit: '50mb' }));
+
+// Static files
+app.use(express.static(path.join(__dirname, './Public')));
+
+(async () => {
+    try {
+        await connectDB();
+        await autoMigrateOnStartup();
+        console.log('✓ Database initialization complete');
+    } catch (error) {
+        console.error('✗ Database initialization failed:', error.message);
         process.exit(1);
-    });
-    //Following Endpoint Updates an object in Mongo db or if the object is not present it will create new  
-    app.post('/Insert', (req, res) => {
-        try {
-            let Responce = DataManupulation.Insert(req, (responce) => {
-                res.send(responce);
-            });
-        } catch (err) {
-            catchHandler('/Insert', err, "Error");
-            res.status(500).json({ error: 'Internal server error' });
-        }
-    });
-    app.post('/Delete', (req, res) => {
-        try {
-            let Responce = DataManupulation.delEntry(req, (responce) => {
-                res.send(responce);
-            });
-        } catch (err) {
-            catchHandler('/Delete', err, "Error");
-            res.status(500).json({ error: 'Internal server error' });
-        }
-    });
-    //Following Endpoint finds an object from Mongo db 
-    app.post('/find', (req, res) => {
-        try {
-            var responce = DataManupulation.FindObj(req, (responce) => {
-                res.send(responce);
-            });
-        } catch (err) {
-            catchHandler('/find', err, "Error");
-            res.status(500).json({ error: 'Internal server error' });
-        }
-    });
-    // Serve insights.html
-    app.get('/insights', (req, res) => {
-        try {
-            res.sendFile(path.join(__dirname, './Public/insights.html'));
-        } catch (err) {
-            catchHandler('/insights', err, "Error");
-            res.status(500).send("Issue with server");
-        }
-    });
-    app.get('/find', (req, res) => {
-        try {
-            req.manuser = '#' + req.query.user;
-            var responce = DataManupulation.FindObj(req, (responce) => {
-                res.send(responce);
-            });
-        } catch (err) {
-            catchHandler('/find (GET)', err, "Error");
-            res.status(500).json({ error: 'Internal server error' });
-        }
-    });
-    //Following Endpoint sends an entry page for user
-    app.get('/*', (req, res) => {
-        try {
-            fs.readFile(path.join(__dirname, 'Public', 'index.html'), 'utf8', function (err, text) {
-                if (err) {
-                    catchHandler("Read index.html", err, "Error");
-                    res.status(500).send("Issue with server");
-                } else {
-                    res.send(text);
-                }
-            });
-        } catch (error) {
-            catchHandler("Error Occured while  provideing service", error, "Error");
-            res.status(500).send("Issue with server");
-            return error;
-        }
-    })
-    // Add these routes before the catch-all route
-    app.post('/fixed/add', async (req, res) => {
-        try {
-            const { user, type, description, amount } = req.body;
-            const entry = new Model.FixedEntry({ user, type, description, amount });
-            await entry.save();
-            res.json({ success: true });
-        } catch (err) {
-            catchHandler('/fixed/add', err, "Error");
-            res.status(500).json({ error: 'Failed to save fixed entry' });
-        }
-    });
+    }
+})();
 
-    app.post('/fixed/list', async (req, res) => {
-        try {
-            const { user } = req.body;
-            const entries = await Model.FixedEntry.find({ user });
-            res.json(entries);
-        } catch (err) {
-            catchHandler('/fixed/list', err, "Error");
-            res.status(500).json({ error: 'Failed to fetch fixed entries' });
-        }
-    });
+// API Routes
+app.use('/api', apiRoutes);
 
-} catch (error) {
-    catchHandler('Start', error, "Error")
-}
+// Serve insights.html
+app.get('/insights', (req, res) => {
+    try {
+        res.sendFile(path.join(__dirname, './Public/insights.html'));
+    } catch (err) {
+        console.error('Error serving insights:', err);
+        res.status(500).send("Error loading page");
+    }
+});
+
+app.get('/budgets', (req, res) => {
+    try {
+        res.sendFile(path.join(__dirname, './Public/budgets.html'));
+    } catch (err) {
+        console.error('Error serving budgets:', err);
+        res.status(500).send("Error loading page");
+    }
+});
+
+app.get('/goals', (req, res) => {
+    try {
+        res.sendFile(path.join(__dirname, './Public/goals.html'));
+    } catch (err) {
+        console.error('Error serving goals:', err);
+        res.status(500).send("Error loading page");
+    }
+});
+
+app.get('/settings', (req, res) => {
+    try {
+        res.sendFile(path.join(__dirname, './Public/settings.html'));
+    } catch (err) {
+        console.error('Error serving settings:', err);
+        res.status(500).send("Error loading page");
+    }
+});
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+    res.json({ status: 'ok', message: 'Server is running' });
+});
+
+// Main page (catch-all)
+app.get('/*', (req, res) => {
+    try {
+        res.sendFile(path.join(__dirname, './Public/index.html'));
+    } catch (err) {
+        console.error('Error serving index:', err);
+        res.status(500).send("Error loading page");
+    }
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error('Error:', err);
+    res.status(err.status || 500).json({
+        success: false,
+        message: err.message || 'Internal server error'
+    });
+});
+
+// Start server
+app.listen(port, () => {
+    console.log(`✓ Server running on http://localhost:${port}`);
+    console.log(`✓ API endpoints available at http://localhost:${port}/api`);
+}).on('error', (err) => {
+    console.error('✗ Server error:', err.message);
+    process.exit(1);
+});
+
+module.exports = app;
