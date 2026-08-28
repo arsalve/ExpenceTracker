@@ -1,5 +1,5 @@
 @font-face{font-family:BalbharatiLocal;src:local('Balbarati01'),local('Balbharati');font-display:swap}
-:root{--bg:#f4f6fb;--surface:#fff;--surface2:#f8f9fd;--text:#172033;--muted:#687389;--border:#e3e7ef;--primary:#655cf6;--primary2:#8b7cff;--green:#1fa978;--red:#db5d68;--blue:#4b88ee;--orange:#d89232;--shadow:0 12px 35px rgba(26,35,58,.07);--radius:18px;--font:'BalbharatiLocal','Balbarati01','Noto Sans Devanagari','Mukta',sans-serif}
+:root{--bg:#f4efe6;--surface:#fffdf8;--surface2:#f7f3eb;--text:#24221e;--muted:#746f66;--border:#ddd5c8;--primary:#3f5f4a;--primary2:#607d68;--green:#34745a;--red:#a95145;--blue:#5a6488;--orange:#805f3f;--shadow:0 12px 32px rgba(54,45,32,.08);--radius:18px;--font:'BalbharatiLocal','Balbarati01','Noto Sans Devanagari','Mukta',sans-serif}
 body.dark{--bg:#0f141d;--surface:#171e29;--surface2:#1d2633;--text:#f4f7fb;--muted:#9aa5b8;--border:#2b3544;--shadow:0 14px 36px rgba(0,0,0,.22)}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.58;-webkit-font-smoothing:antialiased}a{text-decoration:none;color:inherit}button,input,select,textarea{font:inherit}button{cursor:pointer}
 .site-header{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}body.dark .site-header{background:rgba(23,30,41,.88)}.nav-wrap{max-width:1380px;margin:auto;min-height:72px;padding:10px 22px;display:flex;align-items:center;gap:18px}.brand{display:flex;align-items:center;gap:10px;min-width:205px}.brand-mark{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff;display:grid;place-items:center;font-weight:800;box-shadow:0 8px 20px rgba(101,92,246,.25)}.brand-title{font-size:16px;font-weight:800;display:block}.brand-sub{display:block;font-size:10px;color:var(--muted)}.nav{display:flex;gap:5px;flex:1;justify-content:center}.nav a{padding:10px 13px;border-radius:11px;color:var(--muted);font-size:12px;font-weight:700}.nav a:hover,.nav a.active{background:rgba(101,92,246,.1);color:var(--primary)}.nav-actions{display:flex;gap:8px}.icon-btn{width:44px;height:44px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text)}.menu-btn{display:none}
@@ -22,3 +22,493 @@ footer{max-width:1380px;margin:10px auto 0;padding:25px 22px;text-align:center;c
 @media (max-width:900px){.nav{display:none}.menu-btn{display:grid}.nav-wrap{padding:8px 14px;min-height:64px}.brand{min-width:0;flex:1}.brand-sub{display:none}.page{padding:22px 14px 45px}.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}.page-head{align-items:flex-start;flex-direction:column}.actions{width:100%}.actions .btn{flex:1}.chart{min-height:260px}.chart-shell{overflow:hidden}}
 @media (max-width:480px){body{font-size:15px}.page{padding-left:10px;padding-right:10px}.card,.panel,.stat{padding:15px;border-radius:15px}input:not([type=checkbox]):not([type=radio]),select,textarea{font-size:16px;min-height:46px}.btn{min-height:46px}.stat-value{font-size:22px}.chart{min-height:245px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+.action-column{text-align:center!important;width:78px}.action-cell{text-align:center;min-width:78px}.delete-button{width:40px;height:40px;display:inline-grid;place-items:center;border:1px solid rgba(169,81,69,.35);border-radius:10px;background:rgba(169,81,69,.08);color:var(--red);font-size:22px;font-weight:900}.delete-button:hover{background:var(--red);color:#fff}.transaction-table th:last-child,.transaction-table td:last-child{min-width:78px}.transaction-table{min-width:650px}
+
+/* आधुनिक ऋतू-आधारित डिझाइन: दा विंचीची कागदी शिस्त + टेस्लाची तांत्रिक स्वच्छता */
+:root{--season-hue:40;--glass:color-mix(in srgb,var(--card) 78%,transparent);--glass-border:color-mix(in srgb,var(--ink) 10%,transparent);--focus-ring:color-mix(in srgb,var(--accent) 20%,transparent);--motion:cubic-bezier(.2,.75,.25,1)}
+body{background:radial-gradient(circle at 12% 4%,hsl(var(--season-hue) 35% 60%/.10),transparent 28rem),radial-gradient(circle at 92% 18%,hsl(calc(var(--season-hue) + 35) 30% 55%/.08),transparent 24rem),var(--paper);transition:background .5s var(--motion),color .35s ease}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.25;background-image:linear-gradient(115deg,transparent 49.8%,hsl(var(--season-hue) 20% 40%/.035) 50%,transparent 50.2%),linear-gradient(25deg,transparent 49.8%,hsl(var(--season-hue) 20% 40%/.025) 50%,transparent 50.2%);background-size:42px 42px,67px 67px}
+.card,.stat{background:var(--glass);border-color:var(--glass-border);backdrop-filter:blur(16px) saturate(115%);-webkit-backdrop-filter:blur(16px) saturate(115%);transition:transform .22s var(--motion),box-shadow .22s var(--motion),border-color .22s ease}
+.card:hover,.stat:hover{transform:translateY(-2px);box-shadow:0 18px 42px rgba(54,45,32,.11)}
+.btn,.icon-btn,input,select,textarea{transition:transform .16s var(--motion),box-shadow .16s ease,border-color .16s ease,background .2s ease}
+.btn:focus-visible,.icon-btn:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:0;box-shadow:0 0 0 4px var(--focus-ring)}
+.btn:hover{transform:translateY(-2px)}
+.stat-value{animation:number-arrive .45s var(--motion) both}
+@keyframes number-arrive{from{opacity:.25;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes soft-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.section-icon{animation:soft-float 4s ease-in-out infinite}
+.season-badge{display:inline-flex;align-items:center;gap:7px;padding:6px 10px;margin-top:10px;border:1px solid var(--line);border-radius:999px;background:var(--glass);color:var(--muted);font-size:11px;font-weight:800}
+.site-header{background:color-mix(in srgb,var(--paper) 78%,transparent);border-bottom-color:var(--glass-border)}
+@media(max-width:620px){.card:hover,.stat:hover{transform:none}.card{backdrop-filter:blur(11px);-webkit-backdrop-filter:blur(11px)}.btn,.icon-btn{min-height:46px}}
+@media(prefers-reduced-motion:reduce){.card,.stat,.btn,.icon-btn,input,select,textarea,.section-icon,.stat-value{animation:none!important;transition:none!important}}
+
+
+/* =========================================================
+   मोबाइल लेआउट दुरुस्ती
+   inline grid-column spans मुळे mobile वर उजवीकडे रिकामी जागा
+   तयार होऊ नये आणि प्रत्येक section पूर्ण रुंदीमध्ये बसावा.
+   ========================================================= */
+html, body {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+.page,
+footer,
+.site-header {
+  width: 100%;
+  max-width: 100%;
+}
+
+.grid > * {
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  /* index.html मधील grid-column:span 1/2 सारख्या inline
+     styles ना mobile वर एकच column द्या. */
+  .grid > [style*="grid-column"],
+  .grid > [style*="grid-column:"] {
+    grid-column: 1 / -1 !important;
+  }
+
+  .card,
+  .panel,
+  .stat,
+  .table-wrap,
+  .chart-shell,
+  .chart {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .stack {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 16px 10px 36px;
+  }
+
+  .grid {
+    width: 100%;
+    gap: 12px;
+  }
+
+  .grid > *,
+  .stack > * {
+    min-width: 0;
+  }
+
+  .card,
+  .panel,
+  .stat {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .page-head {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  .section-head {
+    gap: 8px;
+    margin-bottom: 13px;
+  }
+
+  .actions {
+    width: 100%;
+    gap: 8px;
+  }
+
+  .actions .btn {
+    min-width: 0;
+  }
+
+  .table-wrap {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .table {
+    width: max-content;
+    min-width: 620px;
+  }
+}
+
+
+/* =========================================================
+   WCAG 2.1 रंग प्रणाली
+   लक्ष्य:
+   - सामान्य मजकूर: किमान 4.5:1 contrast
+   - मोठा मजकूर: किमान 3:1
+   - controls / boundaries / focus: स्पष्ट 3:1+ दृश्य फरक
+   - पारदर्शक gradients टाळून स्थिर background
+   ========================================================= */
+
+:root {
+  --bg: #F5F7FA;
+  --surface: #FFFFFF;
+  --surface2: #EEF2F6;
+
+  --text: #17212B;
+  --muted: #4B5563;
+  --border: #7A8694;
+
+  --primary: #185C43;
+  --primary2: #2F7656;
+  --green: #176B4A;
+  --red: #A83232;
+  --blue: #245B9B;
+  --orange: #7A4308;
+
+  --shadow: 0 8px 24px rgba(23, 33, 43, .10);
+  --focus-ring: #0B63CE;
+
+  --glass: rgba(255,255,255,.97);
+  --glass-border: #7A8694;
+}
+
+body.dark {
+  --bg: #10151B;
+  --surface: #171E26;
+  --surface2: #202A34;
+
+  --text: #F5F7FA;
+  --muted: #C0CAD4;
+  --border: #65717D;
+
+  --primary: #65B891;
+  --primary2: #4E9A76;
+  --green: #65C39A;
+  --red: #F07A7A;
+  --blue: #78A9E6;
+  --orange: #F0B35A;
+
+  --shadow: 0 10px 28px rgba(0,0,0,.30);
+  --focus-ring: #70B7FF;
+
+  --glass: rgba(23,30,38,.98);
+  --glass-border: #65717D;
+}
+
+/* स्थिर, शांत background — ऋतूतील accent फक्त छोटे UI घटक बदलू शकतो. */
+html,
+body {
+  background: var(--bg) !important;
+  color: var(--text);
+}
+
+body::before {
+  display: none !important;
+}
+
+.site-header,
+.mobile-nav {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+}
+
+.card,
+.panel,
+.stat,
+.chart-shell,
+.empty,
+.notice {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+  color: var(--text);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+input:not([type=checkbox]):not([type=radio]),
+select,
+textarea {
+  background: var(--surface2) !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted) !important;
+  opacity: 1;
+}
+
+label,
+.page-head p,
+.section-head p,
+.stat-label,
+.stat-meta,
+.brand-sub,
+footer,
+.text-muted {
+  color: var(--muted) !important;
+}
+
+.btn-primary {
+  background: var(--primary) !important;
+  color: #FFFFFF !important;
+}
+
+.btn-success {
+  background: var(--green) !important;
+  color: #FFFFFF !important;
+}
+
+.btn-danger {
+  background: var(--red) !important;
+  color: #FFFFFF !important;
+}
+
+.btn-secondary,
+.icon-btn {
+  background: var(--surface2) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.brand-mark {
+  background: var(--primary) !important;
+  color: #FFFFFF !important;
+  box-shadow: none !important;
+}
+
+.nav a {
+  color: var(--muted) !important;
+}
+
+.nav a:hover,
+.nav a.active,
+.mobile-nav a.active {
+  background: var(--surface2) !important;
+  color: var(--primary) !important;
+}
+
+.table {
+  border-color: var(--border) !important;
+}
+
+.table th {
+  background: var(--surface2) !important;
+  color: var(--text) !important;
+}
+
+.table td {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+
+.table tr:hover td {
+  background: var(--surface2) !important;
+}
+
+.progress {
+  background: var(--surface2) !important;
+}
+
+.notice.info,
+.notice.success,
+.notice.warn,
+.notice.error {
+  background: var(--surface2) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border);
+}
+
+.chart-error {
+  color: var(--muted) !important;
+}
+
+.delete-button {
+  background: var(--surface2) !important;
+  color: var(--red) !important;
+  border-color: var(--red) !important;
+}
+
+.delete-button:hover,
+.delete-button:focus-visible {
+  background: var(--red) !important;
+  color: #FFFFFF !important;
+}
+
+.season-badge {
+  background: var(--surface) !important;
+  color: var(--muted) !important;
+  border-color: var(--border) !important;
+}
+
+/* Focus indicator नेहमी स्पष्ट दिसेल. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--focus-ring) !important;
+  outline-offset: 2px;
+  box-shadow: none !important;
+}
+
+/* रंगावरच अर्थ अवलंबून राहू नये. */
+.text-success { color: var(--green) !important; }
+.text-danger { color: var(--red) !important; }
+.text-blue { color: var(--blue) !important; }
+.text-primary { color: var(--text) !important; }
+
+/* motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =========================================================
+   अंतिम प्रवेशयोग्य रंग प्रणाली + निवडता येणाऱ्या रंगसंगती
+   ========================================================= */
+:root {
+  --bg: #F6F7F9;
+  --surface: #FFFFFF;
+  --surface2: #EEF1F5;
+  --text: #17212B;
+  --muted: #46515D;
+  --border: #77818C;
+  --primary: #185C43;
+  --primary2: #246B4F;
+  --green: #176B4A;
+  --red: #A83232;
+  --yellow: #8A5A00;
+  --blue: #245B9B;
+  --orange: #7A4308;
+  --focus-ring: #075FC2;
+  --glass: #FFFFFF;
+  --glass-border: #77818C;
+}
+body.dark {
+  --bg: #0F141A;
+  --surface: #181F27;
+  --surface2: #222B35;
+  --text: #F7F9FB;
+  --muted: #C3CCD5;
+  --border: #687480;
+  --primary: #72C69D;
+  --primary2: #55A87F;
+  --green: #72D1A4;
+  --red: #FF8A8A;
+  --yellow: #FFD166;
+  --blue: #82B7F0;
+  --orange: #F2B35F;
+  --focus-ring: #79BCFF;
+  --glass: #181F27;
+  --glass-border: #687480;
+}
+
+/* रंगसंगती: स्थिर backgrounds; फक्त accent/value colors बदलतात. */
+html[data-color-theme="blue"] {
+  --primary:#155A8A; --primary2:#216F9F; --green:#176B4A; --red:#A83232; --yellow:#8A5A00; --blue:#155A8A;
+}
+html[data-color-theme="green"] {
+  --primary:#185C43; --primary2:#246B4F; --green:#176B4A; --red:#A83232; --yellow:#8A5A00; --blue:#245B9B;
+}
+html[data-color-theme="amber"] {
+  --primary:#7A4B00; --primary2:#955F00; --green:#176B4A; --red:#A83232; --yellow:#7A4B00; --blue:#245B9B;
+}
+html[data-color-theme="violet"] {
+  --primary:#5A3A86; --primary2:#704BA5; --green:#176B4A; --red:#A83232; --yellow:#8A5A00; --blue:#315E9B;
+}
+html[data-color-theme="slate"] {
+  --primary:#334E68; --primary2:#486581; --green:#176B4A; --red:#A83232; --yellow:#8A5A00; --blue:#245B9B;
+}
+body.dark[data-color-theme="blue"] { --primary:#73B7E8; --primary2:#5C9DCE; --blue:#82B7F0; }
+body.dark[data-color-theme="green"] { --primary:#72C69D; --primary2:#55A87F; }
+body.dark[data-color-theme="amber"] { --primary:#F0BC63; --primary2:#D69E43; --yellow:#FFD166; }
+body.dark[data-color-theme="violet"] { --primary:#C0A0F0; --primary2:#A983D8; --blue:#82B7F0; }
+body.dark[data-color-theme="slate"] { --primary:#9FB7CC; --primary2:#7F9BB3; --blue:#82B7F0; }
+
+html, body { background:var(--bg) !important; color:var(--text); }
+body::before { display:none !important; }
+.site-header,.mobile-nav { background:var(--surface) !important; border-color:var(--border) !important; backdrop-filter:none !important; }
+.card,.panel,.stat,.chart-shell,.empty,.notice { background:var(--surface) !important; border-color:var(--border) !important; color:var(--text); backdrop-filter:none !important; -webkit-backdrop-filter:none !important; }
+input:not([type=checkbox]):not([type=radio]),select,textarea { background:var(--surface2) !important; color:var(--text) !important; border-color:var(--border) !important; }
+input::placeholder,textarea::placeholder { color:var(--muted) !important; opacity:1; }
+label,.page-head p,.section-head p,.stat-label,.stat-meta,.brand-sub,footer,.text-muted { color:var(--muted) !important; }
+.btn-primary { background:var(--primary) !important; color:#fff !important; }
+.btn-success { background:var(--green) !important; color:#fff !important; }
+.btn-danger { background:var(--red) !important; color:#fff !important; }
+.btn-secondary,.icon-btn { background:var(--surface2) !important; color:var(--text) !important; border:1px solid var(--border) !important; }
+.brand-mark { background:var(--primary) !important; color:#fff !important; box-shadow:none !important; }
+.nav a { color:var(--muted) !important; }
+.nav a:hover,.nav a.active,.mobile-nav a.active { background:var(--surface2) !important; color:var(--primary) !important; }
+.table { min-width:0; border-color:var(--border) !important; }
+.table th { background:var(--surface2) !important; color:var(--text) !important; border-color:var(--border) !important; }
+.table td { background:var(--surface) !important; color:var(--text) !important; border-color:var(--border) !important; }
+.table tr:hover td { background:var(--surface2) !important; }
+.progress { background:var(--surface2) !important; }
+.notice.info,.notice.success,.notice.warn,.notice.error { background:var(--surface2) !important; color:var(--text) !important; border:1px solid var(--border); }
+.season-badge { background:var(--surface) !important; color:var(--muted) !important; border-color:var(--border) !important; }
+.value-income { color:var(--green) !important; }
+.value-expense { color:var(--red) !important; }
+.value-savings { color:var(--yellow) !important; }
+.value-balance { color:var(--blue) !important; }
+.stat.income { border-top-color:var(--green) !important; }
+.stat.expense { border-top-color:var(--red) !important; }
+.stat.savings { border-top-color:var(--yellow) !important; }
+.stat.balance { border-top-color:var(--blue) !important; }
+
+/* व्यवहारांची यादी: सामान्य mobile वर चार columns स्क्रीनमध्ये; delete mode मध्ये scroll. */
+.transaction-table { width:100%; table-layout:fixed; }
+.transaction-table th:nth-child(1),.transaction-table td:nth-child(1){width:19%;}
+.transaction-table th:nth-child(2),.transaction-table td:nth-child(2){width:31%;}
+.transaction-table th:nth-child(3),.transaction-table td:nth-child(3){width:23%;}
+.transaction-table th:nth-child(4),.transaction-table td:nth-child(4){width:27%;}
+.transaction-table th:nth-child(5),.transaction-table td:nth-child(5){width:78px;}
+.transaction-table td { overflow-wrap:anywhere; word-break:break-word; }
+.transaction-table .action-cell { white-space:nowrap; }
+
+@media (max-width:900px) {
+  .transaction-table { min-width:0; }
+  .transaction-table.delete-enabled { min-width:650px; table-layout:auto; }
+  .transaction-table.delete-enabled th,
+  .transaction-table.delete-enabled td { white-space:nowrap; }
+}
+@media (max-width:480px) {
+  .transaction-table { font-size:11px; }
+  .transaction-table th,.transaction-table td { padding:9px 7px; }
+  .transaction-table th:nth-child(1),.transaction-table td:nth-child(1){width:20%;}
+  .transaction-table th:nth-child(2),.transaction-table td:nth-child(2){width:30%;}
+  .transaction-table th:nth-child(3),.transaction-table td:nth-child(3){width:22%;}
+  .transaction-table th:nth-child(4),.transaction-table td:nth-child(4){width:28%;}
+  .transaction-table.delete-enabled { min-width:650px; }
+}
+
+/* Focus: स्पष्ट keyboard indicator. */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible { outline:3px solid var(--focus-ring) !important; outline-offset:2px; box-shadow:none !important; }
+
+/* Theme picker */
+.theme-options { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.theme-option { min-height:76px; padding:12px; border:2px solid var(--border); border-radius:14px; background:var(--surface); color:var(--text); text-align:left; font-weight:800; }
+.theme-option[aria-pressed="true"] { border-color:var(--primary); box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 20%,transparent); }
+.theme-dot { width:26px; height:26px; display:block; border-radius:50%; margin-bottom:7px; border:2px solid rgba(0,0,0,.15); }
+.theme-dot.blue{background:#155A8A}.theme-dot.green{background:#185C43}.theme-dot.amber{background:#7A4B00}.theme-dot.violet{background:#5A3A86}.theme-dot.slate{background:#334E68}
+@media(max-width:480px){.theme-options{grid-template-columns:1fr 1fr}.theme-option{min-height:70px;padding:10px}}
+
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}

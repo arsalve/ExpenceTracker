@@ -1,1 +1,164 @@
-<!doctype html><html lang="mr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>खर्चप्रबंधक — सेटिंग्ज</title><link rel="stylesheet" href="/ui.css"></head><body><main class="page"><section class="page-head"><div><span class="eyebrow">वैयक्तिकरण</span><h1>सेटिंग्ज</h1><p>तुमचे खाते, चलन आणि डेटाचे व्यवस्थापन करा.</p></div></section><div class="grid grid-2"><article class="card"><div class="section-head"><div><h2>वैयक्तिक पसंती</h2><p>तुमच्या खातेवहीचे मूलभूत पर्याय.</p></div></div><div class="stack"><div class="field"><label for="userName">वापरकर्ता नाव / क्रमांक</label><input type="text" id="userName" readonly></div><div class="field"><label for="currency">चलन</label><select id="currency"><option value="₹">भारतीय रुपया (₹)</option><option value="$">अमेरिकन डॉलर ($)</option><option value="€">युरो (€)</option></select></div><div class="field"><label for="language">भाषा</label><select id="language"><option value="mr">मराठी</option><option value="en">इंग्रजी</option><option value="hi">हिंदी</option></select></div><div class="notice info">सध्या या साधनाचा मुख्य अनुभव मराठीमध्ये ठेवला आहे.</div></div></article><article class="card"><div class="section-head"><div><h2>डेटा व्यवस्थापन</h2><p>तुमचा डेटा निर्यात, आयात किंवा साफ करा.</p></div></div><div class="stack"><button id="exportJsonBtn" class="btn btn-success">↓ JSON निर्यात</button><button id="exportCsvBtn" class="btn btn-secondary">↓ CSV निर्यात</button><button id="importBtn" class="btn btn-secondary">↑ JSON आयात</button><input type="file" id="importFile" class="hidden" accept=".json"><div class="notice warn">डेटा आयात करताना वैध JSON फाईल निवडा.</div></div></article><article class="card" style="border-color:rgba(219,93,104,.35)"><div class="section-head"><div><h2>धोकादायक विभाग</h2><p>ही कृती परत करता येणार नाही.</p></div></div><button id="clearAllBtn" class="btn btn-danger">सर्व डेटा हटवा</button></article><article class="card"><div class="section-head"><div><h2>खर्चप्रबंधक बद्दल</h2><p>तुमच्या वैयक्तिक आर्थिक नोंदींसाठी.</p></div></div><div class="stack"><div><strong>आवृत्ती</strong><p>1.0.0</p></div><div><strong>प्लॅटफॉर्म</strong><p>वेब</p></div><div><strong>भाषा</strong><p>मराठी</p></div></div></article></div></main><footer>© २०२६ खर्चप्रबंधक • आपला डेटा, आपला निर्णय</footer><script src="/settings.js"></script><script src="/common-ui.js"></script></body></html>
+<!doctype html>
+<html lang="mr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f4efe6">
+  <title>खर्चप्रबंधक — सेटिंग्ज</title>
+  <link rel="stylesheet" href="/ui.css">
+</head>
+<body>
+  <main class="page">
+    <section class="page-head">
+      <div>
+        <span class="eyebrow">वैयक्तिकरण</span>
+        <h1>सेटिंग्ज</h1>
+        <p>तुमचे खाते, चलन आणि डेटाचे व्यवस्थापन करा.</p>
+      </div>
+    </section>
+
+    <div class="grid grid-2">
+      <article class="card">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">तुमचे खाते</span>
+            <h2>खातेवही बदला</h2>
+            <p>ज्या खातेवहीचा डेटा पाहायचा आहे ते निवडा.</p>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="field">
+            <label for="userName">खातेवहीचे नाव</label>
+            <input type="text" id="userName" readonly>
+          </div>
+
+          <div class="field">
+            <label for="userSelect">खातेवही निवडा</label>
+            <select id="userSelect">
+              <option value="">खातेवही निवडा</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="newUserName">नवीन खातेवही</label>
+            <input type="text" id="newUserName" maxlength="50"
+                   placeholder="उदा. माझे खाते">
+          </div>
+
+          <button id="switchUserBtn" class="btn btn-primary btn-wide" type="button">
+            खातेवही बदला
+          </button>
+
+          <div class="notice info">
+            खातेवही बदलल्यावर त्या वापरकर्त्याचा स्वतंत्र आर्थिक डेटा उघडला जाईल.
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">वैयक्तिक पसंती</span>
+            <h2>मूलभूत पर्याय</h2>
+            <p>तुमच्या खातेवहीसाठी वापरले जाणारे पर्याय.</p>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="field">
+            <label for="currency">चलन</label>
+            <select id="currency">
+              <option value="₹">भारतीय रुपया (₹)</option>
+              <option value="$">अमेरिकन डॉलर ($)</option>
+              <option value="€">युरो (€)</option>
+            </select>
+          </div>
+
+          <div class="notice info">
+            भाषा: मराठी
+          </div>
+
+          <div class="field">
+            <label>रंगसंगती</label>
+            <div id="themeOptions" class="theme-options" role="group" aria-label="रंगसंगती निवडा">
+              <button type="button" class="theme-option" data-theme-choice="season" aria-pressed="false">
+                <span class="theme-dot blue"></span>
+                ऋतूनुसार
+              </button>
+              <button type="button" class="theme-option" data-theme-choice="blue" aria-pressed="false">
+                <span class="theme-dot blue"></span>
+                शांत निळा
+              </button>
+              <button type="button" class="theme-option" data-theme-choice="green" aria-pressed="false">
+                <span class="theme-dot green"></span>
+                वन हिरवा
+              </button>
+              <button type="button" class="theme-option" data-theme-choice="amber" aria-pressed="false">
+                <span class="theme-dot amber"></span>
+                अंबर
+              </button>
+              <button type="button" class="theme-option" data-theme-choice="violet" aria-pressed="false">
+                <span class="theme-dot violet"></span>
+                जांभळा
+              </button>
+              <button type="button" class="theme-option" data-theme-choice="slate" aria-pressed="false">
+                <span class="theme-dot slate"></span>
+                स्लेट
+              </button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">सुरक्षित नोंद</span>
+            <h2>डेटा व्यवस्थापन</h2>
+            <p>तुमचा डेटा निर्यात, आयात किंवा साफ करा.</p>
+          </div>
+        </div>
+
+        <div class="stack">
+          <button id="exportJsonBtn" class="btn btn-success" type="button">↓ JSON निर्यात</button>
+          <button id="exportCsvBtn" class="btn btn-secondary" type="button">↓ CSV निर्यात</button>
+          <button id="importBtn" class="btn btn-secondary" type="button">↑ JSON आयात</button>
+          <input type="file" id="importFile" class="hidden" accept=".json">
+          <div class="notice warn">डेटा आयात करताना वैध JSON फाईल निवडा.</div>
+        </div>
+      </article>
+
+      <article class="card danger-card">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">काळजीपूर्वक वापरा</span>
+            <h2>धोकादायक विभाग</h2>
+            <p>ही कृती परत करता येणार नाही.</p>
+          </div>
+        </div>
+        <button id="clearAllBtn" class="btn btn-danger" type="button">सर्व डेटा हटवा</button>
+      </article>
+
+      <article class="card">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">माहिती</span>
+            <h2>खर्चप्रबंधक बद्दल</h2>
+            <p>तुमच्या वैयक्तिक आर्थिक नोंदींसाठी.</p>
+          </div>
+        </div>
+        <div class="about-list">
+          <div><strong>आवृत्ती</strong><span>१.०.०</span></div>
+          <div><strong>प्लॅटफॉर्म</strong><span>वेब</span></div>
+          <div><strong>भाषा</strong><span>मराठी</span></div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer>© २०२६ खर्चप्रबंधक · आपला डेटा, आपला निर्णय</footer>
+  <script src="/settings.js"></script>
+  <script src="/common-ui.js"></script>
+</body>
+</html>

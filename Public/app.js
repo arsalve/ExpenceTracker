@@ -923,10 +923,7 @@ async loadMonthlyData() {
                 </td>
 
                 <td
-                    class="px-4 py-3
-                           text-right
-                           text-green-600
-                           font-semibold">
+                    class="px-4 py-3 text-right font-semibold value-income">
 
                     ${this.formatCurrency(
                         summary.income
@@ -947,10 +944,7 @@ async loadMonthlyData() {
                 </td>
 
                 <td
-                    class="px-4 py-3
-                           text-right
-                           text-red-600
-                           font-semibold">
+                    class="px-4 py-3 text-right font-semibold value-expense">
 
                     ${this.formatCurrency(
                         summary.expense
@@ -971,10 +965,7 @@ async loadMonthlyData() {
                 </td>
 
                 <td
-                    class="px-4 py-3
-                           text-right
-                           text-blue-600
-                           font-semibold">
+                    class="px-4 py-3 text-right font-semibold value-savings">
 
                     ${this.formatCurrency(
                         summary.savings
@@ -996,10 +987,7 @@ async loadMonthlyData() {
                 </td>
 
                 <td
-                    class="px-4 py-3
-                           text-right
-                           font-bold
-                           text-purple-600">
+                    class="px-4 py-3 text-right font-bold value-balance">
 
                     ${this.formatCurrency(
                         summary.net
@@ -1077,6 +1065,16 @@ async loadMonthlyData() {
                     : "none";
         }
 
+        const transactionTable =
+            tbody.closest(".transaction-table");
+
+        if (transactionTable) {
+            transactionTable.classList.toggle(
+                "delete-enabled",
+                deleteMode
+            );
+        }
+
 
         tbody.innerHTML =
             transactions
@@ -1109,7 +1107,7 @@ async loadMonthlyData() {
 
 
                     let typeColor =
-                        "text-blue-600";
+                        "value-balance";
 
 
                     if (
@@ -1118,7 +1116,7 @@ async loadMonthlyData() {
                     ) {
 
                         typeColor =
-                            "text-green-600";
+                            "value-income";
 
                     } else if (
                         transaction.type ===
@@ -1126,7 +1124,7 @@ async loadMonthlyData() {
                     ) {
 
                         typeColor =
-                            "text-red-600";
+                            "value-expense";
 
                     } else if (
                         transaction.type ===
@@ -1134,7 +1132,7 @@ async loadMonthlyData() {
                     ) {
 
                         typeColor =
-                            "text-blue-600";
+                            "value-savings";
                     }
 
 
@@ -1184,32 +1182,16 @@ async loadMonthlyData() {
                             </td>
 
 
-                            ${
-                                deleteMode
-                                    ? `
-
-                                <td
-                                    class="px-4 py-3
-                                           text-center">
-
-                                    <button
-                                        type="button"
-                                        onclick="app.deleteTransaction('${transaction.id}')"
-                                        class="text-red-600
-                                               hover:text-red-900"
-                                        title="व्यवहार हटवा">
-
-                                        <i
-                                            class="fas fa-trash">
-                                        </i>
-
-                                    </button>
-
-                                </td>
-
-                                `
-                                    : ""
-                            }
+                            <td class="action-cell" style="${deleteMode ? "" : "display:none"}">
+                                <button
+                                    type="button"
+                                    class="delete-button"
+                                    onclick="app.deleteTransaction('${transaction.id}')"
+                                    title="व्यवहार हटवा"
+                                    aria-label="व्यवहार हटवा">
+                                    ×
+                                </button>
+                            </td>
 
                         </tr>
                     `;
