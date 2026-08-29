@@ -1633,7 +1633,7 @@ class ExpenseTracker {
 
 let app;
 
-container.querySelectorAll('.delete-button').forEach(button => {
+document.querySelectorAll('.delete-button').forEach(button => {
     button.addEventListener('click', (event) => {
         const id = event.currentTarget.dataset.transactionId;
         app.deleteTransaction(id);
