@@ -77,53 +77,53 @@ class ExpenseTracker {
             ],
 
             expense: [
-                "आहार",
-                "किराणा",
-                "घरातील खर्च",
-                "परिवहन",
-                "मनोरंजन",
-                "दूरसंचार",
-                "आरोग्य",
-                "वैयक्तिक काळजी",
-                "विमा",
-                "कपडे",
-                "वाहन देखरेख",
-                "इंधन",
-                "रोकड",
-                "वॉलेट ट्रान्स्फर",
-                "इतर खर्च",
-                "भाडे",
-                "वीज",
-                "पाणी",
-                "गॅस",
-                "इंटरनेट",
-                "मोबाईल रिचार्ज",
-                "शिक्षण",
-                "औषधे",
-                "डॉक्टर",
-                "प्रवास",
-                "हॉटेल",
-                "ऑनलाइन खरेदी",
-                "खरेदी",
-                "घर दुरुस्ती",
-                "घरगुती उपकरणे",
-                "मुलांचा खर्च",
-                "पाळीव प्राणी",
-                "देणगी",
-                "कर",
-                "बँक शुल्क",
-                "कर्जाचा हप्ता",
-                "क्रेडिट कार्ड",
-                "गुंतवणूक",
-                "आपत्कालीन खर्च",
-                "भेटवस्तू",
-                "समारंभ",
-                "सदस्यत्व",
-                "सॉफ्टवेअर आणि सेवा",
-                "कार्यालयीन खर्च",
-                "व्यवसाय खर्च",
-                "इतर"
-            ],
+  "आहार",
+  "किराणा",
+  "घरातील खर्च",
+  "परिवहन",
+  "मनोरंजन",
+  "दूरसंचार",
+  "आरोग्य",
+  "वैयक्तिक काळजी",
+  "विमा",
+  "कपडे",
+  "वाहन देखरेख",
+  "इंधन",
+  "रोकड",
+  "वॉलेट ट्रान्स्फर",
+  "इतर खर्च",
+  "भाडे",
+  "वीज",
+  "पाणी",
+  "गॅस",
+  "इंटरनेट",
+  "मोबाईल रिचार्ज",
+  "शिक्षण",
+  "औषधे",
+  "डॉक्टर",
+  "प्रवास",
+  "हॉटेल",
+  "ऑनलाइन खरेदी",
+  "खरेदी",
+  "घर दुरुस्ती",
+  "घरगुती उपकरणे",
+  "मुलांचा खर्च",
+  "पाळीव प्राणी",
+  "देणगी",
+  "कर",
+  "बँक शुल्क",
+  "कर्जाचा हप्ता",
+  "क्रेडिट कार्ड",
+  "गुंतवणूक",
+  "आपत्कालीन खर्च",
+  "भेटवस्तू",
+  "समारंभ",
+  "सदस्यत्व",
+  "सॉफ्टवेअर आणि सेवा",
+  "कार्यालयीन खर्च",
+  "व्यवसाय खर्च",
+  "इतर"
+],
 
             savings: [
                 "म्युच्युअल फंड",
@@ -374,33 +374,40 @@ class ExpenseTracker {
 
         const transaction = {
 
-            user: this.currentUser,
+            user:
+                this.currentUser,
 
-            date: document.getElementById(
-                "transDate"
-            ) ?.value,
-
-            amount: parseFloat(
+            date:
                 document.getElementById(
-                    "transAmount"
-                ) ?.value
-            ),
+                    "transDate"
+                )?.value,
 
-            type: document.getElementById(
-                "transType"
-            ) ?.value,
+            amount:
+                parseFloat(
+                    document.getElementById(
+                        "transAmount"
+                    )?.value
+                ),
 
-            category: document.getElementById(
-                "transCategory"
-            ) ?.value,
+            type:
+                document.getElementById(
+                    "transType"
+                )?.value,
 
-            description: document.getElementById(
-                "transDescription"
-            ) ?.value,
+            category:
+                document.getElementById(
+                    "transCategory"
+                )?.value,
 
-            notes: document.getElementById(
-                "transNotes"
-            ) ?.value
+            description:
+                document.getElementById(
+                    "transDescription"
+                )?.value,
+
+            notes:
+                document.getElementById(
+                    "transNotes"
+                )?.value
         };
 
 
@@ -441,14 +448,17 @@ class ExpenseTracker {
 
             const response =
                 await fetch(
-                    `${this.apiBaseUrl}/transactions/create`, {
+                    `${this.apiBaseUrl}/transactions/create`,
+                    {
                         method: "POST",
 
                         headers: {
-                            "Content-Type": "application/json"
+                            "Content-Type":
+                                "application/json"
                         },
 
-                        body: JSON.stringify(transaction)
+                        body:
+                            JSON.stringify(transaction)
                     }
                 );
 
@@ -531,204 +541,207 @@ class ExpenseTracker {
     // Summary पूर्णपणे frontend वर calculate होतो.
     // ========================================================
 
-    async loadMonthlyData() {
+async loadMonthlyData() {
 
-        const allEntries =
-            document.getElementById("allEntries") ?.checked || false;
+    const allEntries =
+        document.getElementById("allEntries")?.checked || false;
 
-        const monthValue =
-            document.getElementById("searchMonth") ?.value;
+    const monthValue =
+        document.getElementById("searchMonth")?.value;
 
 
-        try {
+    try {
 
-            // =====================================================
-            // 1. GET ALL TRANSACTIONS
-            // =====================================================
+        // =====================================================
+        // 1. GET ALL TRANSACTIONS
+        // =====================================================
 
-            const response = await fetch(
-                `${this.apiBaseUrl}/transactions/get`, {
-                    method: "POST",
+        const response = await fetch(
+            `${this.apiBaseUrl}/transactions/get`,
+            {
+                method: "POST",
 
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                headers: {
+                    "Content-Type": "application/json"
+                },
 
-                    body: JSON.stringify({
-                        user: this.currentUser
-                    })
-                }
+                body: JSON.stringify({
+                    user: this.currentUser
+                })
+            }
+        );
+
+
+        if (!response.ok) {
+
+            console.error(
+                "Transactions API Error:",
+                response.status
+            );
+
+            this.showTransactionError();
+
+            return;
+        }
+
+
+        const responseData =
+            await response.json();
+
+
+        let allTransactions =
+            Array.isArray(responseData.data)
+                ? responseData.data
+                : [];
+
+
+        console.log(
+            "सर्व व्यवहार:",
+            allTransactions
+        );
+
+
+        // =====================================================
+        // 2. TOP CARDS
+        //
+        // Always calculate from ALL records
+        // =====================================================
+
+        const totalSummary =
+            this.calculateSummary(
+                allTransactions
             );
 
 
-            if (!response.ok) {
+        console.log(
+            "एकूण Summary:",
+            totalSummary
+        );
 
-                console.error(
-                    "Transactions API Error:",
-                    response.status
+
+        // Top cards ALWAYS show all records
+        this.updateSummaryDisplay(
+            totalSummary
+        );
+
+
+        // =====================================================
+        // 3. FILTER DATA FOR TABLE + CHART
+        // =====================================================
+
+        let displayTransactions =
+            [...allTransactions];
+
+
+        if (!allEntries) {
+
+            if (!monthValue) {
+
+                alert(
+                    "कृपया महिना निवडा."
                 );
-
-                this.showTransactionError();
 
                 return;
             }
 
 
-            const responseData =
-                await response.json();
-
-
-            let allTransactions =
-                Array.isArray(responseData.data) ?
-                responseData.data :
-                [];
-
-
-            console.log(
-                "सर्व व्यवहार:",
-                allTransactions
-            );
-
-
-            // =====================================================
-            // 2. TOP CARDS
-            //
-            // Always calculate from ALL records
-            // =====================================================
-
-            const totalSummary =
-                this.calculateSummary(
-                    allTransactions
-                );
-
-
-            console.log(
-                "एकूण Summary:",
-                totalSummary
-            );
-
-
-            // Top cards ALWAYS show all records
-            this.updateSummaryDisplay(
-                totalSummary
-            );
-
-
-            // =====================================================
-            // 3. FILTER DATA FOR TABLE + CHART
-            // =====================================================
-
-            let displayTransactions = [...allTransactions];
-
-
-            if (!allEntries) {
-
-                if (!monthValue) {
-
-                    alert(
-                        "कृपया महिना निवडा."
-                    );
-
-                    return;
-                }
-
-
-                const [selectedYear, selectedMonth] =
+            const [selectedYear, selectedMonth] =
                 monthValue.split("-");
 
 
-                displayTransactions =
-                    allTransactions.filter(
-                        transaction => {
+            displayTransactions =
+                allTransactions.filter(
+                    transaction => {
 
-                            if (!transaction.date) {
-                                return false;
-                            }
-
-
-                            const date =
-                                new Date(
-                                    transaction.date
-                                );
+                        if (!transaction.date) {
+                            return false;
+                        }
 
 
-                            const transactionYear =
-                                date.getFullYear()
+                        const date =
+                            new Date(
+                                transaction.date
+                            );
+
+
+                        const transactionYear =
+                            date.getFullYear()
                                 .toString();
 
 
-                            const transactionMonth =
-                                String(
-                                    date.getMonth() + 1
-                                ).padStart(2, "0");
+                        const transactionMonth =
+                            String(
+                                date.getMonth() + 1
+                            ).padStart(2, "0");
 
 
-                            return (
-                                transactionYear ===
-                                selectedYear &&
-                                transactionMonth ===
+                        return (
+                            transactionYear ===
+                                selectedYear
+                            &&
+                            transactionMonth ===
                                 selectedMonth
-                            );
-                        }
-                    );
-            }
-
-
-            console.log(
-                "दर्शविण्यात येणारे व्यवहार:",
-                displayTransactions
-            );
-
-
-            // =====================================================
-            // 4. SELECTED PERIOD SUMMARY
-            //
-            // This is NOT used for top cards.
-            // It is used only for summary table.
-            // =====================================================
-
-            const selectedSummary =
-                this.calculateSummary(
-                    displayTransactions
+                        );
+                    }
                 );
-
-
-            // Summary table = selected month
-            // OR all records if "सर्व नोंदी" checked
-
-            this.updateSummaryTable(
-                selectedSummary
-            );
-
-
-            // =====================================================
-            // 5. TRANSACTION TABLE
-            // =====================================================
-
-            this.updateTransactionsTable(
-                displayTransactions
-            );
-
-
-            // =====================================================
-            // 6. CATEGORY CHART
-            // =====================================================
-
-            this.updateCategoryChart(
-                displayTransactions
-            );
-
-
-        } catch (error) {
-
-            console.error(
-                "डेटा लोड करताना त्रुटी:",
-                error
-            );
-
-            this.showTransactionError();
         }
+
+
+        console.log(
+            "दर्शविण्यात येणारे व्यवहार:",
+            displayTransactions
+        );
+
+
+        // =====================================================
+        // 4. SELECTED PERIOD SUMMARY
+        //
+        // This is NOT used for top cards.
+        // It is used only for summary table.
+        // =====================================================
+
+        const selectedSummary =
+            this.calculateSummary(
+                displayTransactions
+            );
+
+
+        // Summary table = selected month
+        // OR all records if "सर्व नोंदी" checked
+
+        this.updateSummaryTable(
+            selectedSummary
+        );
+
+
+        // =====================================================
+        // 5. TRANSACTION TABLE
+        // =====================================================
+
+        this.updateTransactionsTable(
+            displayTransactions
+        );
+
+
+        // =====================================================
+        // 6. CATEGORY CHART
+        // =====================================================
+
+        this.updateCategoryChart(
+            displayTransactions
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "डेटा लोड करताना त्रुटी:",
+            error
+        );
+
+        this.showTransactionError();
     }
+}
 
 
     // ========================================================
@@ -807,13 +820,17 @@ class ExpenseTracker {
 
         return {
 
-            income: this.roundMoney(income),
+            income:
+                this.roundMoney(income),
 
-            expense: this.roundMoney(expense),
+            expense:
+                this.roundMoney(expense),
 
-            savings: this.roundMoney(savings),
+            savings:
+                this.roundMoney(savings),
 
-            net: this.roundMoney(net)
+            net:
+                this.roundMoney(net)
         };
     }
 
@@ -1063,7 +1080,7 @@ class ExpenseTracker {
         const deleteMode =
             document.getElementById(
                 "deleteMode"
-            ) ?.checked || false;
+            )?.checked || false;
 
 
         const deleteHeader =
@@ -1075,9 +1092,9 @@ class ExpenseTracker {
         if (deleteHeader) {
 
             deleteHeader.style.display =
-                deleteMode ?
-                "" :
-                "none";
+                deleteMode
+                    ? ""
+                    : "none";
         }
 
         const transactionTable =
@@ -1093,65 +1110,65 @@ class ExpenseTracker {
 
         tbody.innerHTML =
             transactions
-            .map(transaction => {
+                .map(transaction => {
 
-                const date =
-                    this.formatDate(
-                        transaction.date
-                    );
-
-
-                const description =
-                    this.escapeHtml(
-                        transaction.description ||
-                        "-"
-                    );
+                    const date =
+                        this.formatDate(
+                            transaction.date
+                        );
 
 
-                const category =
-                    this.escapeHtml(
-                        transaction.category ||
-                        "-"
-                    );
+                    const description =
+                        this.escapeHtml(
+                            transaction.description ||
+                            "-"
+                        );
 
 
-                const amount =
-                    Number(
-                        transaction.amount || 0
-                    );
+                    const category =
+                        this.escapeHtml(
+                            transaction.category ||
+                            "-"
+                        );
 
 
-                let typeColor =
-                    "value-balance";
+                    const amount =
+                        Number(
+                            transaction.amount || 0
+                        );
 
 
-                if (
-                    transaction.type ===
-                    "income"
-                ) {
-
-                    typeColor =
-                        "value-income";
-
-                } else if (
-                    transaction.type ===
-                    "expense"
-                ) {
-
-                    typeColor =
-                        "value-expense";
-
-                } else if (
-                    transaction.type ===
-                    "savings"
-                ) {
-
-                    typeColor =
-                        "value-savings";
-                }
+                    let typeColor =
+                        "value-balance";
 
 
-                return `
+                    if (
+                        transaction.type ===
+                        "income"
+                    ) {
+
+                        typeColor =
+                            "value-income";
+
+                    } else if (
+                        transaction.type ===
+                        "expense"
+                    ) {
+
+                        typeColor =
+                            "value-expense";
+
+                    } else if (
+                        transaction.type ===
+                        "savings"
+                    ) {
+
+                        typeColor =
+                            "value-savings";
+                    }
+
+
+                    return `
 
                         <tr
                             class="border-b
@@ -1201,7 +1218,7 @@ class ExpenseTracker {
                                 <button
                                     type="button"
                                     class="delete-button"
-                                    data-transaction-id="${transaction.id}"
+                                    onclick="app.deleteTransaction('${transaction.id}')"
                                     title="व्यवहार हटवा"
                                     aria-label="व्यवहार हटवा">
                                     ×
@@ -1210,8 +1227,8 @@ class ExpenseTracker {
 
                         </tr>
                     `;
-            })
-            .join("");
+                })
+                .join("");
     }
 
 
@@ -1318,13 +1335,17 @@ class ExpenseTracker {
 
         const trace = {
 
-            labels: categories,
+            labels:
+                categories,
 
-            values: amounts,
+            values:
+                amounts,
 
-            type: "pie",
+            type:
+                "pie",
 
-            hole: 0.46,
+            hole:
+                0.46,
 
             marker: {
                 colors: chartPalette.slice(
@@ -1332,23 +1353,28 @@ class ExpenseTracker {
                     Math.max(categories.length, 1)
                 ),
                 line: {
-                    color: isDark ?
-                        "#171d29" :
-                        "#ffffff",
+                    color:
+                        isDark
+                            ? "#171d29"
+                            : "#ffffff",
                     width: 2
                 }
             },
 
-            textinfo: "label+percent",
+            textinfo:
+                "label+percent",
 
             textfont: {
-                family: '"Balbarati01", "Balbharati", "Noto Sans Devanagari", "Mukta", sans-serif',
-                color: isDark ?
-                    "#f4f7fb" :
-                    "#151a2d"
+                family:
+                    '"Balbarati01", "Balbharati", "Noto Sans Devanagari", "Mukta", sans-serif',
+                color:
+                    isDark
+                        ? "#f4f7fb"
+                        : "#151a2d"
             },
 
-            hovertemplate: "%{label}<br>" +
+            hovertemplate:
+                "%{label}<br>" +
                 "रक्कम: ₹%{value:,.2f}" +
                 "<br>प्रमाण: %{percent}" +
                 "<extra></extra>"
@@ -1361,24 +1387,30 @@ class ExpenseTracker {
                 text: "खर्चाचे वितरण",
 
                 font: {
-                    family: "Balbharati, Noto Sans Devanagari, Mangal, sans-serif",
+                    family:
+                        "Balbharati, Noto Sans Devanagari, Mangal, sans-serif",
 
-                    color: isDark ?
-                        "#ffffff" :
-                        "#111827"
+                    color:
+                        isDark
+                            ? "#ffffff"
+                            : "#111827"
                 }
             },
 
-            paper_bgcolor: "rgba(0,0,0,0)",
+            paper_bgcolor:
+                "rgba(0,0,0,0)",
 
-            plot_bgcolor: "rgba(0,0,0,0)",
+            plot_bgcolor:
+                "rgba(0,0,0,0)",
 
             font: {
-                family: "Balbharati, Noto Sans Devanagari, Mangal, sans-serif",
+                family:
+                    "Balbharati, Noto Sans Devanagari, Mangal, sans-serif",
 
-                color: isDark ?
-                    "#ffffff" :
-                    "#111827"
+                color:
+                    isDark
+                        ? "#ffffff"
+                        : "#111827"
             },
 
             margin: {
@@ -1392,10 +1424,12 @@ class ExpenseTracker {
                 orientation: "h",
                 y: -0.1,
                 font: {
-                    family: '"Balbarati01", "Balbharati", "Noto Sans Devanagari", "Mukta", sans-serif',
-                    color: isDark ?
-                        "#dce2ee" :
-                        "#596277"
+                    family:
+                        '"Balbarati01", "Balbharati", "Noto Sans Devanagari", "Mukta", sans-serif',
+                    color:
+                        isDark
+                            ? "#dce2ee"
+                            : "#596277"
                 }
             }
         };
@@ -1449,19 +1483,24 @@ class ExpenseTracker {
 
             const response =
                 await fetch(
-                    `${this.apiBaseUrl}/transactions/delete`, {
+                    `${this.apiBaseUrl}/transactions/delete`,
+                    {
                         method: "POST",
 
                         headers: {
-                            "Content-Type": "application/json"
+                            "Content-Type":
+                                "application/json"
                         },
 
-                        body: JSON.stringify({
+                        body:
+                            JSON.stringify({
 
-                            user: this.currentUser,
+                                user:
+                                    this.currentUser,
 
-                            transactionId: transactionId
-                        })
+                                transactionId:
+                                    transactionId
+                            })
                     }
                 );
 
@@ -1508,7 +1547,8 @@ class ExpenseTracker {
     formatCurrency(amount) {
 
         return new Intl.NumberFormat(
-            "mr-IN", {
+            "mr-IN",
+            {
                 style: "currency",
 
                 currency: "INR",
@@ -1548,7 +1588,8 @@ class ExpenseTracker {
 
 
         return date.toLocaleDateString(
-            "mr-IN", {
+            "mr-IN",
+            {
                 day: "2-digit",
                 month: "2-digit",
                 year: "numeric"
@@ -1633,12 +1674,6 @@ class ExpenseTracker {
 
 let app;
 
-document.querySelectorAll('.delete-button').forEach(button => {
-    button.addEventListener('click', (event) => {
-        const id = event.currentTarget.dataset.transactionId;
-        app.deleteTransaction(id);
-    });
-});
 
 document.addEventListener(
     "DOMContentLoaded",

@@ -23,6 +23,7 @@ app.use(helmet({
     contentSecurityPolicy: {
         directives: {
             defaultSrc: ["'self'"],
+            
             scriptSrc: [
                 "'self'",
                 "'unsafe-inline'",
@@ -34,6 +35,7 @@ app.use(helmet({
                 "https://kit.fontawesome.com",
                 "https://cdnjs.cloudflare.com"
             ],
+            scriptSrcAttr: ["'unsafe-inline'"],
             styleSrc: [
                 "'self'",
                 "'unsafe-inline'",
