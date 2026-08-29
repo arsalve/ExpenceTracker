@@ -1582,7 +1582,7 @@ class ExpenseTracker {
             );
 
         div.textContent =
-            String(value ? ? "");
+            String(value ?? "");
 
         return div.innerHTML;
     }
